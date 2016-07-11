@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+
+<Project>
+  <Desktop>
+    <Static>
+      <Debug-Log>
+        
+        
+      <ColumnWidth0>20</ColumnWidth0><ColumnWidth1>1221</ColumnWidth1></Debug-Log>
+      <Build>
+        
+        
+        
+        
+      <ColumnWidth0>20</ColumnWidth0><ColumnWidth1>915</ColumnWidth1><ColumnWidth2>244</ColumnWidth2><ColumnWidth3>61</ColumnWidth3></Build>
+      <Workspace>
+        <ColumnWidths>
+          
+          
+          
+          
+        <Column0>170</Column0><Column1>27</Column1><Column2>27</Column2><Column3>27</Column3></ColumnWidths>
+      </Workspace>
+      <Disassembly>
+        <col-names>
+          
+          
+        <item>Disassembly</item><item>_I0</item></col-names>
+        <col-widths>
+          
+          
+        <item>500</item><item>20</item></col-widths>
+        <DisasmHistory/>
+        
+        
+      <PreferedWindows><Position>2</Position><ScreenPosX>0</ScreenPosX><ScreenPosY>0</ScreenPosY><Windows><Window><Factory>WATCH_1</Factory></Window><Window><Factory>TerminalIO</Factory></Window></Windows></PreferedWindows><ShowCodeCoverage>1</ShowCodeCoverage><ShowInstrProfiling>1</ShowInstrProfiling></Disassembly>
+      <DRIVER_TIMELINE_GRAPH>
+        <PreferedWindows>
+          
+          
+          
+          
+        <Position>3</Position><ScreenPosX>0</ScreenPosX><ScreenPosY>0</ScreenPosY><Windows/></PreferedWindows>
+      </DRIVER_TIMELINE_GRAPH>
+      <DRIVER_DATA_LOG>
+        <PreferedWindows>
+          <Position>3</Position>
+          <ScreenPosX>0</ScreenPosX>
+          <ScreenPosY>0</ScreenPosY>
+          <Windows/>
+        </PreferedWindows>
+        <col-names>
+          <item>Address</item>
+          <item>Cycles</item>
+          <item>HAL_Init</item>
+          <item>Program Counter</item>
+        </col-names>
+        <col-widths>
+          <item>130</item>
+          <item>180</item>
+          <item>120</item>
+          <item>130</item>
+        </col-widths>
+      </DRIVER_DATA_LOG>
+    <TerminalIO><PreferedWindows><Position>2</Position><ScreenPosX>0</ScreenPosX><ScreenPosY>0</ScreenPosY><Windows><Window><Factory>WATCH_1</Factory></Window><Window><Factory>Disassembly</Factory></Window></Windows></PreferedWindows><InputSource>1</InputSource><InputMode>10</InputMode><Filename>$PROJ_DIR$\TermIOInput.txt</Filename><InputEcho>1</InputEcho><ShowReset>0</ShowReset></TerminalIO><QuickWatch><col-names><item>Expression</item><item>Location</item><item>Type</item><item>Value</item></col-names><col-widths><item>100</item><item>150</item><item>100</item><item>100</item></col-widths><QWatchHistory><item>lcd_y_size</item><item>lcd_x_size</item><item>uwTick</item><item>tickstart</item><item>Delay</item><item>sdramstatus</item></QWatchHistory><PreferedWindows><Position>2</Position><ScreenPosX>0</ScreenPosX><ScreenPosY>0</ScreenPosY><Windows/></PreferedWindows></QuickWatch><WATCH_1><expressions><item>HAL_GetTick</item><item>a[i]</item><item>i</item><item>lcd_y_size</item><item>lcd_x_size</item><item>HACT</item><item>VACT</item><item>orientation</item><item>width</item><item>((width + 7)/8)</item><item/></expressions><col-names><item>Expression</item><item>Location</item><item>Type</item><item>Value</item></col-names><col-widths><item>100</item><item>150</item><item>100</item><item>210</item></col-widths><PreferedWindows><Position>2</Position><ScreenPosX>0</ScreenPosX><ScreenPosY>0</ScreenPosY><Windows><Window><Factory>TerminalIO</Factory></Window><Window><Factory>Disassembly</Factory></Window></Windows></PreferedWindows></WATCH_1><Memory><FindAsHex>0</FindAsHex></Memory><DRIVER_INTERRUPT_LOG><col-names><item>Cycles</item><item>Execution Cycles</item><item>Interrupt</item><item>Program Counter</item><item>Status</item></col-names><col-widths><item>180</item><item>180</item><item>300</item><item>100</item><item>120</item></col-widths><PreferedWindows><Position>3</Position><ScreenPosX>0</ScreenPosX><ScreenPosY>0</ScreenPosY><Windows><Window><Factory>DRIVER_INTERRUPT_STAT</Factory></Window></Windows></PreferedWindows></DRIVER_INTERRUPT_LOG><DRIVER_INTERRUPT_STAT><PreferedWindows><Position>3</Position><ScreenPosX>0</ScreenPosX><ScreenPosY>0</ScreenPosY><Windows><Window><Factory>DRIVER_INTERRUPT_LOG</Factory></Window></Windows></PreferedWindows><col-names><item>Count</item><item>Fastest</item><item>First Time</item><item>Interrupt</item><item>Max Interval</item><item>Min Interval</item><item>Slowest</item><item>Total (%)</item><item>Total (Time)</item></col-names><col-widths><item>80</item><item>100</item><item>180</item><item>300</item><item>140</item><item>140</item><item>100</item><item>80</item><item>100</item></col-widths></DRIVER_INTERRUPT_STAT><DRIVER_EVENT_LOG><PreferedWindows><Position>3</Position><ScreenPosX>0</ScreenPosX><ScreenPosY>0</ScreenPosY><Windows/></PreferedWindows><col-names><item>ITM1</item><item>ITM2</item><item>ITM3</item><item>ITM4</item><item>Program Counter</item><item>Time</item></col-names><col-widths><item>130</item><item>130</item><item>130</item><item>130</item><item>130</item><item>180</item></col-widths></DRIVER_EVENT_LOG><PHYSBPWIN><PreferedWindows><Position>3</Position><ScreenPosX>0</ScreenPosX><ScreenPosY>0</ScreenPosY><Windows/></PreferedWindows><col-names><item>#</item><item>Breakpoint</item></col-names><col-widths><item>60</item><item>400</item></col-widths></PHYSBPWIN><CallStack><PreferedWindows><Position>1</Position><ScreenPosX>0</ScreenPosX><ScreenPosY>0</ScreenPosY><Windows/></PreferedWindows><col-names><item>Frame</item><item>_I0</item></col-names><col-widths><item>3500</item><item>20</item></col-widths></CallStack><Breakpoints><col-names><item>Breakpoint</item><item>_I0</item></col-names><col-widths><item>500</item><item>35</item></col-widths></Breakpoints><Register><RegFindHistory/><PreferedWindows><Position>2</Position><ScreenPosX>0</ScreenPosX><ScreenPosY>0</ScreenPosY><Windows/></PreferedWindows></Register><PROJECT_GUI_CALL_GRAPH><col-names><item>File</item><item>Function</item><item>Line</item></col-names><col-widths><item>200</item><item>700</item><item>100</item></col-widths><PreferedWindows><Position>3</Position><ScreenPosX>0</ScreenPosX><ScreenPosY>0</ScreenPosY><Windows/></PreferedWindows></PROJECT_GUI_CALL_GRAPH></Static>
+    <Windows>
+      
+      
+      
+    <Wnd0>
+        <Tabs>
+          <Tab>
+            <Identity>TabID-20834-2954</Identity>
+            <TabName>Workspace</TabName>
+            <Factory>Workspace</Factory>
+            <Session>
+              
+            <NodeDict><ExpandedNode>MyAPP</ExpandedNode><ExpandedNode>MyAPP/Application</ExpandedNode><ExpandedNode>MyAPP/Application/main.c</ExpandedNode><ExpandedNode>MyAPP/Drivers</ExpandedNode><ExpandedNode>MyAPP/Drivers/BSP</ExpandedNode><ExpandedNode>MyAPP/Drivers/BSP/bsp_sdram.c</ExpandedNode><ExpandedNode>MyAPP/Output</ExpandedNode></NodeDict></Session>
+          </Tab>
+        </Tabs>
+        
+      <SelectedTab>0</SelectedTab></Wnd0><Wnd1><Tabs><Tab><Identity>TabID-4904-24709</Identity><TabName>Breakpoints</TabName><Factory>Breakpoints</Factory></Tab><Tab><Identity>TabID-19165-21985</Identity><TabName>Timeline</TabName><Factory>DRIVER_TIMELINE_GRAPH</Factory><Session><TimelineUnitSeconds>1</TimelineUnitSeconds><TimelineZoom>11</TimelineZoom><TimelineVisCount>3</TimelineVisCount><TimelineStripeId0>Data</TimelineStripeId0><TimelineStripeVis0>1</TimelineStripeVis0><TimelineStripeId1>Interrupt</TimelineStripeId1><TimelineStripeVis1>1</TimelineStripeVis1><TimelineStripeId2>Events</TimelineStripeId2><TimelineStripeVis2>1</TimelineStripeVis2></Session></Tab><Tab><Identity>TabID-14730-15314</Identity><TabName>Memory</TabName><Factory>Memory</Factory><Session><ZoneNumber>20</ZoneNumber><SelectionAnchor>3221225580</SelectionAnchor><SelectionEnd>3221225580</SelectionEnd><UnitsPerGroup>4</UnitsPerGroup><EndianMode>0</EndianMode><DataCovEnabled>0</DataCovEnabled><DataCovShown>0</DataCovShown><AutoRefresh>1</AutoRefresh><HScroll>0</HScroll><VScroll>201327636</VScroll></Session></Tab><Tab>
+            <Identity>TabID-10085-2951</Identity>
+            <TabName>Debug Log</TabName>
+            <Factory>Debug-Log</Factory>
+            <Session/>
+          </Tab><Tab>
+            <Identity>TabID-9563-2961</Identity>
+            <TabName>Build</TabName>
+            <Factory>Build</Factory>
+            <Session/>
+          </Tab></Tabs><SelectedTab>3</SelectedTab></Wnd1><Wnd4><Tabs><Tab><Identity>TabID-2236-22525</Identity><TabName>Watch 1</TabName><Factory>WATCH_1</Factory></Tab></Tabs><SelectedTab>0</SelectedTab></Wnd4></Windows>
+    <Editor>
+      
+      
+      
+      
+    <Pane><Tab><Factory>TextEditor</Factory><Filename>$WS_DIR$\..\..\..\..\..\..\..\..\..\..\STM32F469\MyApp\Application\Src\main.c</Filename><XPos>0</XPos><YPos>0</YPos><SelStart>0</SelStart><SelEnd>0</SelEnd><XPos2>0</XPos2><YPos2>51</YPos2><SelStart2>1958</SelStart2><SelEnd2>1958</SelEnd2></Tab><ActiveTab>0</ActiveTab><Tab><Factory>TextEditor</Factory><Filename>$WS_DIR$\..\..\..\..\..\..\..\..\..\..\STM32F469\MyApp\Drivers\BSP\bsp_lcd.c</Filename><XPos>0</XPos><YPos>0</YPos><SelStart>0</SelStart><SelEnd>0</SelEnd><XPos2>0</XPos2><YPos2>153</YPos2><SelStart2>0</SelStart2><SelEnd2>0</SelEnd2></Tab><Tab><Factory>TextEditor</Factory><Filename>$WS_DIR$\..\..\..\..\..\..\..\..\..\..\STM32F469\MyApp\Application\Src\stm32f4xx_it.c</Filename><XPos>0</XPos><YPos>0</YPos><SelStart>0</SelStart><SelEnd>0</SelEnd><XPos2>0</XPos2><YPos2>66</YPos2><SelStart2>3524</SelStart2><SelEnd2>3524</SelEnd2></Tab><Tab><Factory>TextEditor</Factory><Filename>$WS_DIR$\..\..\..\..\..\..\..\..\..\..\STM32F469\MyApp\Drivers\BSP\bsp_lcd.h</Filename><XPos>0</XPos><YPos>0</YPos><SelStart>0</SelStart><SelEnd>0</SelEnd><XPos2>0</XPos2><YPos2>99</YPos2><SelStart2>5554</SelStart2><SelEnd2>5554</SelEnd2></Tab><Tab><Factory>TextEditor</Factory><Filename>$WS_DIR$\..\..\..\..\..\..\..\..\..\..\STM32F469\MyApp\Drivers\STM32F4xx_HAL_Driver\Src\stm32f4xx_hal_ltdc.c</Filename><XPos>0</XPos><YPos>0</YPos><SelStart>0</SelStart><SelEnd>0</SelEnd><XPos2>0</XPos2><YPos2>491</YPos2><SelStart2>19691</SelStart2><SelEnd2>19691</SelEnd2></Tab><Tab><Factory>TextEditor</Factory><Filename>$WS_DIR$\..\..\..\..\Examples\LCD_DSI\LCD_DSI_VideoMode_DoubleBuffering\Src\main.c</Filename><XPos>0</XPos><YPos>0</YPos><SelStart>0</SelStart><SelEnd>0</SelEnd><XPos2>0</XPos2><YPos2>143</YPos2><SelStart2>5644</SelStart2><SelEnd2>5644</SelEnd2></Tab><Tab><Factory>TextEditor</Factory><Filename>$WS_DIR$\..\..\..\..\Examples\LCD_DSI\LCD_DSI_VideoMode_DoubleBuffering\EWARM\startup_stm32f469xx.s</Filename><XPos>0</XPos><YPos>0</YPos><SelStart>0</SelStart><SelEnd>0</SelEnd><XPos2>0</XPos2><YPos2>182</YPos2><SelStart2>13792</SelStart2><SelEnd2>13792</SelEnd2></Tab></Pane><ActivePane>0</ActivePane><Sizes><Pane><X>1000000</X><Y>1000000</Y></Pane></Sizes><SplitMode>1</SplitMode></Editor>
+    <Positions>
+      
+      
+      
+      
+      
+    <Top><Row0><Sizes><Toolbar-00FAA8C8><key>iaridepm.enu1</key></Toolbar-00FAA8C8><Toolbar-16288330><key>debuggergui.enu1</key></Toolbar-16288330><Toolbar-162884C0><key>armstlink2.enu1</key></Toolbar-162884C0></Sizes></Row0></Top><Left><Row0><Sizes><Wnd0><Rect><Top>-2</Top><Left>-2</Left><Bottom>601</Bottom><Right>261</Right><x>-2</x><y>-2</y><xscreen>200</xscreen><yscreen>201</yscreen><sizeHorzCX>156250</sizeHorzCX><sizeHorzCY>278393</sizeHorzCY><sizeVertCX>205469</sizeVertCX><sizeVertCY>835180</sizeVertCY></Rect></Wnd0></Sizes></Row0></Left><Right><Row0><Sizes><Wnd4><Rect><Top>-2</Top><Left>-2</Left><Bottom>601</Bottom><Right>135</Right><x>-2</x><y>-2</y><xscreen>200</xscreen><yscreen>200</yscreen><sizeHorzCX>156250</sizeHorzCX><sizeHorzCY>277008</sizeHorzCY><sizeVertCX>107031</sizeVertCX><sizeVertCY>835180</sizeVertCY></Rect></Wnd4></Sizes></Row0></Right><Bottom><Row0><Sizes><Wnd1><Rect><Top>-2</Top><Left>-2</Left><Bottom>76</Bottom><Right>1282</Right><x>-2</x><y>-2</y><xscreen>1284</xscreen><yscreen>78</yscreen><sizeHorzCX>1003125</sizeHorzCX><sizeHorzCY>108033</sizeHorzCY><sizeVertCX>156250</sizeVertCX><sizeVertCY>940443</sizeVertCY></Rect></Wnd1></Sizes></Row0></Bottom><Float><Sizes/></Float></Positions>
+  </Desktop>
+</Project>
+
+
