@@ -109,38 +109,59 @@ typedef enum
 *													函数声明
 *****************************************************************************************************
 */
-uint8_t	BSP_LCD_Init(LCD_OrientationTypeDef orientation);
-void 		BSP_LCD_Reset(void);
-void 		BSP_LCD_MspInit(void);
-void 		BSP_DSI_IO_WriteCmd(uint32_t NbParams, uint8_t *pParams);
-void 		BSP_LCD_SetXSize(uint16_t imageWidthPixels);
-void 		BSP_LCD_SetYSize(uint16_t imageHeighPixels);
-void 		BSP_LCD_LayerDefaultInit(uint16_t LayerIndex, uint32_t FB_Address);
-void 		BSP_LCD_SelectLayer(uint32_t LayerIndex);
-void 		BSP_LCD_DisplayOn(void);
-void 		BSP_LCD_DisplayOff(void);
+uint8_t  BSP_LCD_Init(LCD_OrientationTypeDef orientation);
+void 		 BSP_LCD_Reset(void);
+void 		 BSP_LCD_MspInit(void);
+void     BSP_LCD_Clear(uint32_t Color);
+void     BSP_LCD_ClearStringLine(uint32_t Line);
+void     BSP_LCD_DisplayOn(void);
+void     BSP_LCD_DisplayOff(void);
+
+void 		 DSI_IO_WriteCmd(uint32_t NbParams, uint8_t *pParams);
+void 		 BSP_LCD_LayerDefaultInit(uint16_t LayerIndex, uint32_t FB_Address);
+void 		 BSP_LCD_SelectLayer(uint32_t LayerIndex);
+void     BSP_LCD_SetXSize(uint16_t imageWidthPixels);
+void     BSP_LCD_SetYSize(uint16_t imageHeighPixels);
 uint32_t BSP_LCD_GetXSize(void);
 uint32_t BSP_LCD_GetYSize(void);
-void 		BSP_LCD_SetFont(sFONT *fonts);
-void 		BSP_LCD_DrawPixel(uint16_t Xpos, uint16_t Ypos, uint32_t RGBValue);
-void 		BSP_LCD_DisplayChar(uint16_t Xpos, uint16_t Ypos, uint8_t Ascii);
-__weak void LCD_LTDC_ER_IRQHandler(void);
-__weak void LCD_DSI_IRQHandler(void);
-__weak void LCD_LTDC_IRQHandler(void);
+void 		 BSP_LCD_SetFont(sFONT *fonts);
+sFONT    *BSP_LCD_GetFont(void);
+uint32_t BSP_LCD_GetBackColor(void);
+void     BSP_LCD_SetBackColor(uint32_t Color);
+uint32_t BSP_LCD_GetTextColor(void);
+void     BSP_LCD_SetTextColor(uint32_t Color);
+void     BSP_LCD_ResetColorKeying(uint32_t LayerIndex);
+void     BSP_LCD_SetColorKeying(uint32_t LayerIndex, uint32_t RGBValue);
+void     BSP_LCD_SetLayerWindow(uint32_t LayerIndex, uint16_t Xpos, uint16_t Ypos, uint16_t Width, uint16_t Height);
+void     BSP_LCD_SetLayerAddress(uint32_t LayerIndex, uint32_t Address);
+void     BSP_LCD_SetTransparency(uint32_t LayerIndex, uint32_t Transparency);
+void     BSP_LCD_SelectLayerVisible(uint32_t LayerIndex, FunctionalState State);
+void     BSP_LCD_SelectLayer(uint32_t LayerIndex);
+
+uint32_t BSP_LCD_ReadPixel(uint16_t Xpos, uint16_t Ypos);
+void    BSP_LCD_DrawPixel(uint16_t Xpos, uint16_t Ypos, uint32_t RGBValue);
+void    BSP_LCD_DisplayChar(uint16_t Xpos, uint16_t Ypos, uint8_t Ascii);
 void 		BSP_LCD_DsiplayStringAt(uint16_t Xpos, uint16_t Ypos, uint8_t *Text, Text_AlignModeTypdef Mode);
 void 		BSP_LCD_DisplayStringAtLine(uint16_t Line, uint8_t *pstr);
+
 void 		BSP_LCD_DrawLine(uint16_t x1, uint16_t y1, uint16_t x2, uint16_t y2);
 void 		BSP_LCD_DrawHLine(uint16_t Xpos, uint16_t Ypos, uint16_t Length);
 void 		BSP_LCD_DrawVLine(uint16_t Xpos, uint16_t Ypos, uint16_t Length);
-void 		BSP_LCD_Clear(uint32_t Color);
-sFONT 	*LCD_GetFont(void);
 void 		BSP_LCD_DrawRect(uint16_t Xpos, uint16_t Ypos, uint16_t Width, uint16_t Height);
 void 		BSP_LCD_DrawCircle(uint16_t Xpos, uint16_t Ypos, uint16_t Radius);
 void 		BSP_LCD_DrawEllipse(uint16_t Xpos, uint16_t Ypos, uint16_t XRadius, uint16_t YRadius);
 void 		BSP_LCD_DrawPolygon(pPoint Points, uint16_t PointCount);
 void 		BSP_DrawBitmap(uint16_t Xpos, uint16_t Ypos, const uint8_t *pbmp);
+
 void    BSP_LCD_FillRect(uint16_t Xpos, uint16_t Ypos, uint16_t Width, uint16_t Height);
 void 		BSP_LCD_FillCircle(uint16_t Xpos, uint16_t Ypos, uint16_t Radius);
+void    BSP_LCD_FillEllipse(uint16_t Xpos, uint16_t Ypos, uint16_t XRadius, uint16_t YRadius);
+void    BSP_LCD_FillPolygon(pPoint Points, uint16_t PointCount);
+void FillTriangle(uint16_t x1, uint16_t y1, uint16_t x2, uint16_t y2, uint16_t x3, uint16_t y3);
+
+__weak void LCD_LTDC_ER_IRQHandler(void);
+__weak void LCD_DSI_IRQHandler(void);
+__weak void LCD_LTDC_IRQHandler(void);
 
 #ifdef __cplusplus
 }
