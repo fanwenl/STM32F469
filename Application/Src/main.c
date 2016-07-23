@@ -6,7 +6,7 @@
 * @date    06-May-2016
 * @brief   Main program body
 ******************************************************************************
-
+*/
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
 
@@ -22,19 +22,15 @@
 /* Private define ------------------------------------------------------------*/
 /* Private macro -------------------------------------------------------------*/
 /* Private variables ---------------------------------------------------------*/
-//static OS_STK App_TaskStartStk[APP_CFG_TASK_START_STK_SIZE-1];
-//static OS_STK App_MainTaskStk[APP_CFG_MAIN_TASK_STK_SIZE-1];
+static OS_STK App_TaskStartStk[APP_CFG_TASK_START_STK_SIZE-1];
+static OS_STK App_MainTaskStk[APP_CFG_MAIN_TASK_STK_SIZE-1];
+static OS_STK App_MonitorTaskStk[APP_CFG_MONITOR_TASK_STK_SIZE-1];
 /* Private function prototypes -----------------------------------------------*/
 static void SystemClock_Config(void);
 static void Error_Handler(void);
-//static void AppTaskStart (void *p_arg);
-//static void AppMainTask (void *p_arg);
-
-#define  SDRAM_SIZE  ((uint32_t)0x8000)
-uint32_t a[SDRAM_SIZE];
-uint32_t b[SDRAM_SIZE];
-extern uint32_t uwTick;
-uint8_t  c[] = {'A'};
+static void AppTaskStart (void *p_arg);
+static void AppMainTask (void *p_arg);
+static void AppMonitorTask (void *p_arg);
 
 /* Private functions ---------------------------------------------------------*/
 
@@ -45,124 +41,128 @@ uint8_t  c[] = {'A'};
 */
 int main(void)
 {
-  uint32_t i, j;
 #if (OS_TASK_NAME_EN > 0u)
-  uint8_t os_err; 
+	uint8_t os_err; 
 #endif
-  /* STM32F4xx HAL library initialization*/
-  HAL_Init();
-  
-  SystemClock_Config();
-  
-  SDRAM_Init();
-  /*LCD_ORIENTATION_LANDSCAPE  LCD_ORIENTATION_PORTRAIT*/
-  LCD_Init(LCD_ORIENTATION_PORTRAIT);
-  
- LCD_LayerDefaultInit(0,SDRAM_BANK1_ADDR);
- 
-//  LCD_SelectLayer(0);
-  
-	LCD_DisplayChar(0, 0, 'A');
-	LCD_DisplayChar(480, 800, 'B');
- 
 
+	HAL_Init();   
+	
+	OSInit();
+	
+	/*创建起始任务*/
+	OSTaskCreate(AppTaskStart,
+					 0,
+					 &App_TaskStartStk[APP_CFG_TASK_START_STK_SIZE-1],
+					 APP_CFG_TASK_START_PRIO);
+	
+#if (OS_TASK_NAME_EN > 0u)
+	OSTaskNameSet(APP_CFG_TASK_START_PRIO,
+					  "App_Task_Start",
+					  &os_err); 
+#endif
   
-  for(i = 0; i <= SDRAM_SIZE;i++)
-  {
-	 a[i] =(uint32_t) SDRAM_SIZE + i;
-  }	
-  if(SDRAM_Init() != SDRAM_ERROR)
-  {
-	 printf("%s\n","sdram init ok");
-	 uwTick = 0;
-	 printf("%ld\n",uwTick);
-	 SDRAM_WriteData(SDRAM_DEVICE_ADDR, a, (uint32_t)SDRAM_SIZE);
-	 SDRAM_WriteData(SDRAM_DEVICE_ADDR, a, (uint32_t)SDRAM_SIZE);
-	 SDRAM_WriteData(SDRAM_DEVICE_ADDR, a, (uint32_t)SDRAM_SIZE);
-	 SDRAM_WriteData(SDRAM_DEVICE_ADDR, a, (uint32_t)SDRAM_SIZE);
-	 printf("%ld\n",uwTick);
-	 
-	 SDRAM_ReadDataDMA(SDRAM_DEVICE_ADDR, b, (uint32_t)10);
-	 for (j = 0; j < 10; j++)
-	 {  
-		printf("%d\n",b[j]);
-	 }
-  }
-  else
-  {
-	 printf("%s\n","sdram error");
-  }
-  
-  //	OSInit();
-  //	
-  //	OSTaskCreate(AppTaskStart,
-  //					 0,
-  //					 &App_TaskStartStk[APP_CFG_TASK_START_STK_SIZE-1],
-  //					 APP_CFG_TASK_START_PRIO);
-  //#if (OS_TASK_NAME_EN > 0u)
-  //	OSTaskNameSet(APP_CFG_TASK_START_PRIO,
-  //					  "App_Task_Start",
-  //					  &os_err); 
-  //#endif
-  //
-  //	OSStart();
+	OSStart();
   
   while (1)
   {
 	 ;
   }
-  
 }
-//static void AppTaskStart (void *p_arg)
-//{
-//  p_arg = p_arg;
-//  
-//#if (OS_TASK_NAME_EN >0u)
-//	uint8_t os_err; 
-//#endif
-// /* Configure the system clock to 180 MHz */
-//  	SystemClock_Config();
-//	LED_Init(LED1);
-//	LED_Init(LED2);
-//	LED_Init(LED3);
-//	LED_Init(LED4);
-//	Button_Init(User_Button,Button_Mode_GPIO);
-//	LED_On(LED1);
-//	OSStatInit ();
-//	OSTaskCreate(AppMainTask,
-//					 (void *)0,
-//					 &App_MainTaskStk[APP_CFG_MAIN_TASK_STK_SIZE-1],
-//					 APP_CFG_MAIN_TASK_PRIO);
-//#if (OS_TASK_NAME_EN >0u)
-//	OSTaskNameSet(APP_CFG_MAIN_TASK_PRIO,
-//					  "APP_Main_Task",
-//					  &os_err);
-//	OSTaskSuspend(OS_PRIO_SELF);
-//	for(;;)
-//	{
-//	  ;
-//	}
-//#endif
-//}
-//static void AppMainTask (void *p_arg)
-//{
-//  	p_arg = p_arg;
-//	for(;;)
-//	{
-//		LED_Toggle(LED2);
-//		HAL_Delay(10);
-//		if(Button_GetState(User_Button) == (uint32_t)1)
-//		{
-//			HAL_Delay(10);
-//			if(Button_GetState(User_Button) == (uint32_t)1)
-//			{
-//			LED_Toggle(LED3);
-//			while(Button_GetState(User_Button) == 1);
-//			}
-//	 	}
-//	}	
-//}
+/**
+ * [AppTaskStart  起始任务函数]
+ * @param p_arg [输入参数]
+ * @note	该函数主要初始化外设，创建主要任务，完成后该任务挂起
+ *       死机后可重启该任务。
+ */
+static void AppTaskStart (void *p_arg)
+{
+	p_arg = p_arg;
+  
+#if (OS_TASK_NAME_EN >0u)
+	uint8_t os_err; 
+#endif
+	/* 配置系统主时钟为180 MHz */
+	SystemClock_Config();
 
+	/*初始化SDRAM*/
+	SDRAM_Init();
+
+	/*初始化GUI图形库*/	
+//	GUI_Init();
+	
+	/*初始化LED外设*/
+	BSP_LED_Init(LED1);
+	BSP_LED_Init(LED2);
+	BSP_LED_Init(LED3);
+	BSP_LED_Init(LED4);
+
+	/*初始用户按键*/
+	BSP_Button_Init(User_Button,Button_Mode_GPIO);
+	
+	/*建立统计任务*/
+	OSStatInit ();
+	
+	/*创建主任务*/
+	OSTaskCreate(AppMainTask,
+					 (void *)0,
+					 &App_MainTaskStk[APP_CFG_MAIN_TASK_STK_SIZE-1],
+					 APP_CFG_MAIN_TASK_PRIO);
+	
+#if (OS_TASK_NAME_EN >0u)
+	OSTaskNameSet(APP_CFG_MAIN_TASK_PRIO,
+					  "APP_Main_Task",
+					  &os_err);
+#endif
+	/*创建一个监视任务*/
+		OSTaskCreate(AppMonitorTask,
+					 (void *)0,
+					 &App_MonitorTaskStk[APP_CFG_MAIN_TASK_STK_SIZE-1],
+					 APP_CFG_MONITOR_TASK_PRIO);
+	
+#if (OS_TASK_NAME_EN >0u)
+	OSTaskNameSet(APP_CFG_MONITOR_TASK_PRIO,
+					  "APP_Monitor_Task",
+					  &os_err);
+#endif
+	/*挂起启动任务*/
+	OSTaskSuspend(OS_PRIO_SELF);
+	
+	for(;;)
+	{
+	  ;
+	}
+}
+/**
+ * [AppMainTask  主任务函数]
+ * @param p_arg [参数]
+ */
+static void AppMainTask (void *p_arg)
+{
+	p_arg = p_arg;
+	for(;;)
+	{
+		BSP_LED_Toggle(LED2);
+		OSTimeDly(100);
+		if(BSP_Button_GetState(User_Button) == (uint32_t)1)
+		{
+			OSTimeDly(10);
+			if(BSP_Button_GetState(User_Button) == (uint32_t)1)
+			{
+			BSP_LED_Toggle(LED3);
+			while(BSP_Button_GetState(User_Button) == 1);
+			}
+		}
+	}	
+}
+static void AppMonitorTask (void *p_arg)
+{
+	p_arg = p_arg;
+	for(;;)
+	{
+		BSP_LED_Toggle(LED1);
+		OSTimeDly(1000);
+	}
+}
 /*
 ***************************************************************************************
 * @brief  System Clock Configuration

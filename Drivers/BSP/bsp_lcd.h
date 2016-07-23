@@ -162,6 +162,7 @@ void FillTriangle(uint16_t x1, uint16_t y1, uint16_t x2, uint16_t y2, uint16_t x
 __weak void LCD_LTDC_ER_IRQHandler(void);
 __weak void LCD_DSI_IRQHandler(void);
 __weak void LCD_LTDC_IRQHandler(void);
+__weak void LCD_DMA2D_IRQHandler(void);
 
 #ifdef __cplusplus
 }

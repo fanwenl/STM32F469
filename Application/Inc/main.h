@@ -42,7 +42,7 @@
 /* Includes ------------------------------------------------------------------*/
 #include "stm32f4xx_hal.h"
 #include "bsp.h"
-//#include "ucos_ii.h"
+#include "ucos_ii.h"
 #include "bsp_sdram.h"
 #include "bsp_lcd.h"
 #include "stdio.h"

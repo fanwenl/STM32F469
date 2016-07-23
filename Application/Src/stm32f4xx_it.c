@@ -155,16 +155,16 @@ void PendSV_Handler(void)
   */
 void SysTick_Handler(void)
 {
-//	OS_CPU_SR  cpu_sr;
+	OS_CPU_SR  cpu_sr;
   
 	HAL_IncTick();
 
-//	OS_ENTER_CRITICAL();                                        /* Tell uC/OS-II that we are starting an ISR            */
-//	OSIntEnter();
-//	OS_EXIT_CRITICAL();
-//	
-//	OSTimeTick();                                               /* Call uC/OS-II's OSTimeTick()                         */
-//	OSIntExit();
+	OS_ENTER_CRITICAL();                                        /* Tell uC/OS-II that we are starting an ISR            */
+	OSIntEnter();
+	OS_EXIT_CRITICAL();
+	
+	OSTimeTick();                                               /* Call uC/OS-II's OSTimeTick()                         */
+	OSIntExit();
 }
 
 /******************************************************************************/

@@ -45,6 +45,7 @@
 */
 
 #include  <ucos_ii.h>
+#include "app_hooks.h"
 
 
 /*
@@ -375,7 +376,7 @@ void  OSTaskStatHook (void)
 * 
 *                     " This requirement extends to operating systems and run-time code for all architecture versions 
 *                       prior to ARMV7 and to the A, R and M architecture profiles thereafter. Special considerations 
-*                       associated with ARMV7M are discussed in §2.3.3"
+*                       associated with ARMV7M are discussed in 2.3.3"
 * 
 *                     (1) Even if the SP 8-byte aligment is not a requirement for the ARMv7M profile, the stack is aligned
 *                         to 8-byte boundaries to support legacy execution enviroments.

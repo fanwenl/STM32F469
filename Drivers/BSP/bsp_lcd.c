@@ -763,7 +763,7 @@ void BSP_LCD_DrawLine(uint16_t x1, uint16_t y1, uint16_t x2, uint16_t y2)
  * @param Ypos   [起点y坐标]
  * @param Length [线的长度(像素表示)]
  */
-void BSP_BSP_LCD_DrawHLine(uint16_t Xpos, uint16_t Ypos, uint16_t Length)
+void BSP_LCD_DrawHLine(uint16_t Xpos, uint16_t Ypos, uint16_t Length)
 {
 	uint32_t Xaddr = 0;
 
@@ -779,7 +779,7 @@ void BSP_BSP_LCD_DrawHLine(uint16_t Xpos, uint16_t Ypos, uint16_t Length)
  * @param Ypos   [起点y坐标]
  * @param Length [线的长度(像素表示)]
  */
-void BSP_BSP_LCD_DrawVLine(uint16_t Xpos, uint16_t Ypos, uint16_t Length)
+void BSP_LCD_DrawVLine(uint16_t Xpos, uint16_t Ypos, uint16_t Length)
 {
 	uint32_t Xaddr = 0;
 
@@ -1041,12 +1041,12 @@ void BSP_LCD_FillCircle(uint16_t Xpos, uint16_t Ypos, uint16_t Radius)
 	{
 
 		/*填充两端的部分,根据对称以(-x,y)和(-x,-y)为起点，以2倍的CurX画横线 */
-		BSP_BSP_LCD_DrawHLine((Xpos - CurX), (Ypos - CurY), 2 * CurX);
-		BSP_BSP_LCD_DrawHLine((Xpos - CurX), (Ypos + CurY), 2 * CurX);
+		BSP_LCD_DrawHLine((Xpos - CurX), (Ypos - CurY), 2 * CurX);
+		BSP_LCD_DrawHLine((Xpos - CurX), (Ypos + CurY), 2 * CurX);
 
 		/*填充中间的部分,根据对称以(-y,x)和(-y,-x)为起点，以2倍的CurY画横线 */
-		BSP_BSP_LCD_DrawHLine(Xpos - CurY, Ypos + CurX, 2 *CurY);
-      BSP_BSP_LCD_DrawHLine(Xpos - CurY, Ypos - CurX, 2 *CurY);
+		BSP_LCD_DrawHLine(Xpos - CurY, Ypos + CurX, 2 *CurY);
+      BSP_LCD_DrawHLine(Xpos - CurY, Ypos - CurX, 2 *CurY);
 		
 		if (p < 0)         /*中点画圆法，增量p*/
 		{
@@ -1168,6 +1168,8 @@ void BSP_LCD_FillEllipse(uint16_t Xpos, uint16_t Ypos, uint16_t XRadius, uint16_
  * @param y2 [第二个点的y坐标]
  * @param x3 [第三个点的x坐标]
  * @param y3 [第三个点的y坐标]
+ * @note 该函数还有点问题 需要优化，由于该函数使用的是简单的画线的填充方式，部分像素点填充不了
+ *       一般同一个三角形需要变换坐标的位置填充三遍。
  */
 void FillTriangle(uint16_t x1, uint16_t y1, uint16_t x2, uint16_t y2, uint16_t x3, uint16_t y3)
 {
@@ -1307,7 +1309,7 @@ __weak void LCD_LTDC_ER_IRQHandler(void)
   * @brief  Handles DMA2D interrupt request.
   * @note : Can be surcharged by application code implementation of the function.
   */
-__weak void BSP_LCD_DMA2D_IRQHandler(void)
+__weak void LCD_DMA2D_IRQHandler(void)
 {
   HAL_DMA2D_IRQHandler(&DMA2D_Handle);
 }

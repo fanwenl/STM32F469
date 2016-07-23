@@ -38,7 +38,7 @@ GPIO_TypeDef*  Button_Port[1] = {USER_BUTTON_GPIO_PORT };
 *返回：无
 * ************************************************************************************************
  */
-void LED_Init(Led_TypeDef Led)
+void BSP_LED_Init(Led_TypeDef Led)
 {
 	GPIO_InitTypeDef	GPIO_InitStructure;
 	/*初始化GPIO结构体变量*/
@@ -78,7 +78,7 @@ void LED_Init(Led_TypeDef Led)
 *note：该函数没有禁用GPIO的时钟
 * ************************************************************************************************
  */
-void LED_DeInit(Led_TypeDef Led)
+void BSP_LED_DeInit(Led_TypeDef Led)
 {
 	/*关闭LED*/
 	HAL_GPIO_WritePin(GPIO_Port[Led],GPIO_Pin[Led],GPIO_PIN_SET);
@@ -92,7 +92,7 @@ void LED_DeInit(Led_TypeDef Led)
 *返回：无
 * ************************************************************************************************
  */
-void LED_On(Led_TypeDef Led)
+void BSP_LED_On(Led_TypeDef Led)
 {
 	HAL_GPIO_WritePin(GPIO_Port[Led],GPIO_Pin[Led],GPIO_PIN_RESET);
 }
@@ -104,7 +104,7 @@ void LED_On(Led_TypeDef Led)
 *返回：无
 * ************************************************************************************************
  */
-void LED_Off(Led_TypeDef Led)
+void BSP_LED_Off(Led_TypeDef Led)
 {
 	HAL_GPIO_WritePin(GPIO_Port[Led],GPIO_Pin[Led],GPIO_PIN_SET);
 }
@@ -116,7 +116,7 @@ void LED_Off(Led_TypeDef Led)
 *返回：无
 * ************************************************************************************************
  */
-void LED_Toggle(Led_TypeDef Led)
+void BSP_LED_Toggle(Led_TypeDef Led)
 {
 	HAL_GPIO_TogglePin(GPIO_Port[Led],GPIO_Pin[Led]);
 }
@@ -130,7 +130,7 @@ void LED_Toggle(Led_TypeDef Led)
 *返回：无
 * ************************************************************************************************
  */
-void Button_Init(Button_TypeDef Button,ButtonMode_TypeDef Button_Mode)
+void BSP_Button_Init(Button_TypeDef Button,ButtonMode_TypeDef Button_Mode)
 {
 	GPIO_InitTypeDef GPIO_InitStructure;
 	/*Enable the Button Clock*/
@@ -166,7 +166,7 @@ void Button_Init(Button_TypeDef Button,ButtonMode_TypeDef Button_Mode)
 *返回：无
 * ************************************************************************************************
  */
-void Button_DeInit(Button_TypeDef Button)
+void BSP_Button_DeInit(Button_TypeDef Button)
 {
 	HAL_NVIC_DisableIRQ((IRQn_Type)(Button_IRQn[Button]));
    HAL_GPIO_DeInit(Button_Port[Button], Button_Pin[Button]);
@@ -178,7 +178,7 @@ void Button_DeInit(Button_TypeDef Button)
 *返回：按键的值
 * ************************************************************************************************
  */
-uint32_t Button_GetState(Button_TypeDef Button)
+uint32_t BSP_Button_GetState(Button_TypeDef Button)
 {
   return HAL_GPIO_ReadPin(Button_Port[Button], Button_Pin[Button]);
 }

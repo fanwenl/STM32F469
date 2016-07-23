@@ -59,14 +59,14 @@ typedef enum
 *												函数申明
 * **************************************************************************************************
  */
-void 	LED_Init(Led_TypeDef Led);
-void 	LED_DeInit(Led_TypeDef Led);	
-void 	LED_On(Led_TypeDef Led);
-void 	LED_Off(Led_TypeDef Led);
-void 	LED_Toggle(Led_TypeDef);
-void 	Button_Init(Button_TypeDef Button,ButtonMode_TypeDef Button_Mode);
-void 	Button_DeInit(Button_TypeDef Button);
-uint32_t Button_GetState(Button_TypeDef Button);
+void 	BSP_LED_Init(Led_TypeDef Led);
+void 	BSP_LED_DeInit(Led_TypeDef Led);	
+void 	BSP_LED_On(Led_TypeDef Led);
+void 	BSP_LED_Off(Led_TypeDef Led);
+void 	BSP_LED_Toggle(Led_TypeDef);
+void 	BSP_Button_Init(Button_TypeDef Button,ButtonMode_TypeDef Button_Mode);
+void 	BSP_Button_DeInit(Button_TypeDef Button);
+uint32_t BSP_Button_GetState(Button_TypeDef Button);
 void OTM8009A_IO_Delay(uint32_t delay);
 /*
 ****************************************************************************************************
