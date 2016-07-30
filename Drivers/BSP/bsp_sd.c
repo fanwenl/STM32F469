@@ -2,7 +2,7 @@
 
 
 SD_HandleTypeDef SD_Handle;
-HAL_SD_CardInfoTypedef SD_CardInfo;
+SD_CardInfo CardInfo;
 
 static void BSP_SD_MspInit(SD_HandleTypeDef *hsd);
 static void BSP_SD_MspDeInit(SD_HandleTypeDef *hsd);
@@ -26,11 +26,11 @@ uint8_t BSP_SD_Init(void)
 	{
 		return MSD_ERROR_SD_NOT_PRESENT;
 	}
-	if (HAL_SD_Init(&SD_Handle, &SD_CardInfo) != SD_OK);
+	if (HAL_SD_Init(&SD_Handle, &CardInfo)!= SD_OK)
 	{
-		status = SD_ERROR;
+		status = MSD_ERROR;
 	}
-	if(status == SD_OK)
+	if(status == MSD_OK)
 	{
 		if (HAL_SD_WideBusOperation_Config(&SD_Handle, SDIO_BUS_WIDE_4B) != SD_OK)
 		{
@@ -287,6 +287,7 @@ void BSP_SD_DMA_Rx_IRQHandler(void)
 {
   HAL_DMA_IRQHandler(SD_Handle.hdmarx);
 }
+ 
 HAL_SD_TransferStateTypedef BSP_SD_GetStatus(void)
 {
   return(HAL_SD_GetStatus(&SD_Handle));
