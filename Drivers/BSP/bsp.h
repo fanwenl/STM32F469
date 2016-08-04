@@ -101,8 +101,103 @@ void OTM8009A_IO_Delay(uint32_t delay);
 #define USER_BUTTON_PIN                     GPIO_PIN_0
 #define USER_BUTTON_GPIO_PORT             	((GPIO_TypeDef *)GPIOA)
 #define USER_BUTTON_EXTI_IRQn             	EXTI0_IRQn
-
 #define BUTTON_GPIO_CLK_ENABLE()            __HAL_RCC_GPIOA_CLK_ENABLE()
+
+#define TS_INT_PIN                        ((uint32_t)GPIO_PIN_5)
+#define TS_INT_GPIO_PORT                  ((GPIO_TypeDef*)GPIOJ)
+#define TS_INT_GPIO_CLK_ENABLE()          __HAL_RCC_GPIOJ_CLK_ENABLE()
+#define TS_INT_GPIO_CLK_DISABLE()         __HAL_RCC_GPIOJ_CLK_DISABLE()
+#define TS_INT_EXTI_IRQn                  EXTI9_5_IRQn
+
+/*
+****************************************************************************************************
+*												I2C1定义
+* **************************************************************************************************
+ */
+/**
+  * @brief TouchScreen FT6206 Slave I2C address
+  */
+#define TS_I2C_ADDRESS                   ((uint16_t)0x54)
+
+
+/**
+  * @brief Audio I2C Slave address
+  */
+#define AUDIO_I2C_ADDRESS                ((uint16_t)0x94)
+
+/**
+  * @brief EEPROM I2C Slave address 1
+  */
+#define EEPROM_I2C_ADDRESS_A01           ((uint16_t)0xA0)
+
+/**
+  * @brief EEPROM I2C Slave address 2
+  */
+#define EEPROM_I2C_ADDRESS_A02           ((uint16_t)0xA6)
+
+/**
+  * @brief I2C clock speed configuration (in Hz)
+  * WARNING:
+  * Make sure that this define is not already declared in other files
+  * It can be used in parallel by other modules.
+  */
+#ifndef I2C1_SCL_FREQ_KHZ
+#define I2C1_SCL_FREQ_KHZ                  400000 /*!< f(I2C_SCL) = 400 kHz */
+#endif /* I2C1_SCL_FREQ_KHZ */
+
+/*I21C的时钟资源定义*/
+#define BSP_I2C1                             I2C1
+#define BSP_I2C1_CLK_ENABLE()                __HAL_RCC_I2C1_CLK_ENABLE()
+#define BSP_I2C1_CLK_DISABLE()				 __HAL_RCC_I2C1_CLK_DISABLE()
+//#define BSP_DMAx_CLK_ENABLE()                __HAL_RCC_DMA1_CLK_ENABLE()
+#define BSP_I2C1_SCL_SDA_GPIO_CLK_ENABLE()   __HAL_RCC_GPIOB_CLK_ENABLE()
+#define BSP_I2C1_FORCE_RESET()               __HAL_RCC_I2C1_FORCE_RESET()
+#define BSP_I2C1_RELEASE_RESET()             __HAL_RCC_I2C1_RELEASE_RESET()
+
+/*I2C1的引脚定义，用于触摸*/
+#define BSP_I2C1_SCL_PIN                     GPIO_PIN_8 /*!< PB8 */
+#define BSP_I2C1_SCL_SDA_GPIO_PORT           GPIOB
+#define BSP_I2C1_SCL_SDA_AF                  GPIO_AF4_I2C1
+#define BSP_I2C1_SDA_PIN                     GPIO_PIN_9 /*!< PB9 */
+
+/*I2C1中断定义*/
+#define BSP_I2C1_EV_IRQn                     I2C1_EV_IRQn
+#define BSP_I2C1_ER_IRQn                     I2C1_ER_IRQn
+/*
+****************************************************************************************************
+*												I2C2定义
+* **************************************************************************************************
+ */
+/**
+  * @brief I2C2 clock speed configuration (in Hz)
+  * WARNING:
+  * Make sure that this define is not already declared in other files
+  * It can be used in parallel by other modules.
+  */
+#ifndef I2C2_SCL_FREQ_KHZ
+#define I2C2_SCL_FREQ_KHZ                  100000 /*!< f(I2C2_SCL) < 100 kHz */
+#endif /* I2C2_SCL_FREQ_KHZ */
+
+/*I2C2的时钟资源定义*/
+#define BSP__I2C2                             I2C2
+#define BSP__I2C2_CLK_ENABLE()                __HAL_RCC_I2C2_CLK_ENABLE()
+  #define BSP_I2C1_CLK_DISABLE()			  __HAL_RCC_I2C1_CLK_DISABLE()
+#define BSP__I2C2_SCL_SDA_GPIO_CLK_ENABLE()   __HAL_RCC_GPIOH_CLK_ENABLE()
+#define BSP__I2C2_FORCE_RESET()               __HAL_RCC_I2C2_FORCE_RESET()
+#define BSP__I2C2_RELEASE_RESET()             __HAL_RCC_I2C2_RELEASE_RESET()
+
+/*I2C2引脚定义*/
+#define BSP_I2C2_SCL_PIN                     GPIO_PIN_4 /*!< PH4 */
+#define BSP_I2C2_SCL_SDA_GPIO_PORT           GPIOH
+#define BSP_I2C2_SCL_SDA_AF                  GPIO_AF4_I2C2
+#define BSP_I2C2_SDA_PIN                     GPIO_PIN_5 /*!< PH5 */
+
+/*I2C2的中断定义*/
+#define BSP_I2C2_EV_IRQn                     I2C2_EV_IRQn
+#define BSP_I2C2_ER_IRQn                     I2C2_ER_IRQn
+
+
+
 #ifdef __cplusplus
 }
 #endif /*cplusplus*/
