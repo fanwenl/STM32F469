@@ -79,7 +79,8 @@ uint8_t SDRAM_ReadDataDMA( uint32_t pAddress, uint32_t *pDstBuffer, uint32_t Buf
 uint8_t SDRAM_WriteData(uint32_t pAddress, uint32_t *pDstBuffer, uint32_t BufferSize);
 uint8_t SDRAM_WriteDataDMA(uint32_t pAddress, uint32_t *pDstBuffer, uint32_t BufferSize);
 uint8_t SDRAM_SendCmd(FMC_SDRAM_CommandTypeDef *SdramCmd);
-__weak void SDRAM_MspDeInit(SDRAM_HandleTypeDef *HSDRAM );
+
+void BSP_SDRAM_MspDeInit(SDRAM_HandleTypeDef *HSDRAM );
 void SDRAM_DMA_IRQHandler(void);
 
 #ifdef __cplusplus

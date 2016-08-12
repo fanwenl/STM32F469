@@ -21,8 +21,8 @@ static FMC_SDRAM_TimingTypeDef  TimStructure;
 *										SDRAM驱动私有函数申明
 **************************************************************************************************
  */
-static void SDRAM_InitSeq(uint32_t RefreshCount);
-static void SDRAM_MspInit(SDRAM_HandleTypeDef *HSDRAM);
+static void BSP_SDRAM_InitSeq(uint32_t RefreshCount);
+static void BSP_SDRAM_MspInit(SDRAM_HandleTypeDef *HSDRAM);
 /*
 **************************************************************************************************
 *描述：SDARM初始化函数
@@ -31,7 +31,7 @@ static void SDRAM_MspInit(SDRAM_HandleTypeDef *HSDRAM);
 *note：该函数初始化FMC时序以及SDRAM
 * ************************************************************************************************
  */
-uint8_t SDRAM_Init(void)
+uint8_t BSP_SDRAM_Init(void)
 {
 	static uint8_t sdramstatus = SDRAM_ERROR;
 
@@ -50,7 +50,7 @@ uint8_t SDRAM_Init(void)
 	/*配置SDRAM*/
 	SDRAM_Handle.Init.SDBank             = FMC_SDRAM_BANK1;							/*SDRAM挂载FMC的Bank1*/
 	SDRAM_Handle.Init.ColumnBitsNumber   = FMC_SDRAM_COLUMN_BITS_NUM_8;			/*列地址为8bit*/
-	SDRAM_Handle.Init.RowBitsNumber      = FMC_SDRAM_ROW_BITS_NUM_11;				/*行地址为11bit*/
+	SDRAM_Handle.Init.RowBitsNumber      = FMC_SDRAM_ROW_BITS_NUM_12;				/*行地址为11bit*/
 	SDRAM_Handle.Init.MemoryDataWidth    = FMC_SDRAM_MEM_BUS_WIDTH_32;			/*SDRAM数据宽度为32bit*/
 	SDRAM_Handle.Init.InternalBankNumber = FMC_SDRAM_INTERN_BANKS_NUM_4;			/*SDRAM芯片包还四个Bank*/
 	SDRAM_Handle.Init.CASLatency         = FMC_SDRAM_CAS_LATENCY_3;				/*SDRAM芯片的CAS延时为3个周期*/
@@ -61,7 +61,7 @@ uint8_t SDRAM_Init(void)
 	SDRAM_Handle.Init.ReadPipeDelay      = FMC_SDRAM_RPIPE_DELAY_0;				/*这个延时为0*/
 	
 	/*初始化SDRAM的MSP外设*/
-	SDRAM_MspInit(&SDRAM_Handle);
+	BSP_SDRAM_MspInit(&SDRAM_Handle);
 	
 	if (HAL_SDRAM_Init(&SDRAM_Handle,&TimStructure) != HAL_OK)
 	{
@@ -72,7 +72,7 @@ uint8_t SDRAM_Init(void)
 		sdramstatus = SDRAM_OK;
 	}
 	/*初始化SDRAM的通道*/
-	SDRAM_InitSeq(REFRESH_COUNT);
+	BSP_SDRAM_InitSeq(REFRESH_COUNT);
 
 	return sdramstatus;
 }
@@ -84,7 +84,7 @@ uint8_t SDRAM_Init(void)
 *note：该函数将SDRAM恢复到默认
 * ************************************************************************************************
  */
-uint8_t SDRAM_DeInit(void)
+uint8_t BSP_SDRAM_DeInit(void)
 {
 	static uint8_t sdramstatus = SDRAM_ERROR;
 
@@ -94,7 +94,7 @@ uint8_t SDRAM_DeInit(void)
   {
 		sdramstatus = SDRAM_OK;
 
-		SDRAM_MspDeInit(&SDRAM_Handle);
+		BSP_SDRAM_MspDeInit(&SDRAM_Handle);
   }
   return sdramstatus;
 }
@@ -106,7 +106,7 @@ uint8_t SDRAM_DeInit(void)
 *note：无
 * ************************************************************************************************
  */
-static void SDRAM_InitSeq(uint32_t RefreshCount)
+static void BSP_SDRAM_InitSeq(uint32_t RefreshCount)
 {
 	static FMC_SDRAM_CommandTypeDef CommandStructure;
 	static uint32_t temp = 0;
@@ -165,7 +165,7 @@ static void SDRAM_InitSeq(uint32_t RefreshCount)
 *note：数据的大小为32bit
 * ************************************************************************************************
  */
-uint8_t SDRAM_ReadData( uint32_t pAddress, uint32_t *pDstBuffer, uint32_t BufferSize)
+uint8_t BSP_SDRAM_ReadData( uint32_t pAddress, uint32_t *pDstBuffer, uint32_t BufferSize)
 {
 	if (HAL_SDRAM_Read_32b(&SDRAM_Handle, (uint32_t *)pAddress, pDstBuffer, BufferSize) != HAL_OK)
 	{
@@ -187,7 +187,7 @@ uint8_t SDRAM_ReadData( uint32_t pAddress, uint32_t *pDstBuffer, uint32_t Buffer
 *		 需要使能DMA2外设以及DAM的中断
 * ************************************************************************************************
  */
-uint8_t SDRAM_ReadDataDMA( uint32_t pAddress, uint32_t *pDstBuffer, uint32_t BufferSize)
+uint8_t BSP_SDRAM_ReadDataDMA( uint32_t pAddress, uint32_t *pDstBuffer, uint32_t BufferSize)
 {
 	if (HAL_SDRAM_Read_DMA(&SDRAM_Handle, (uint32_t *)pAddress, pDstBuffer, BufferSize) != HAL_OK)
 	{
@@ -208,7 +208,7 @@ uint8_t SDRAM_ReadDataDMA( uint32_t pAddress, uint32_t *pDstBuffer, uint32_t Buf
 *note：数据的大小为32bit，
 * ************************************************************************************************
  */
-uint8_t SDRAM_WriteData(uint32_t pAddress, uint32_t *pDstBuffer, uint32_t BufferSize)
+uint8_t BSP_SDRAM_WriteData(uint32_t pAddress, uint32_t *pDstBuffer, uint32_t BufferSize)
 {
 	if (HAL_SDRAM_Write_32b(&SDRAM_Handle, (uint32_t *)pAddress, pDstBuffer, BufferSize) != HAL_OK)
 	{
@@ -231,7 +231,7 @@ uint8_t SDRAM_WriteData(uint32_t pAddress, uint32_t *pDstBuffer, uint32_t Buffer
 *		 需要使能DMA2外设以及DAM的中断
 * ************************************************************************************************
  */
-uint8_t SDRAM_WriteDataDMA(uint32_t pAddress, uint32_t *pDstBuffer, uint32_t BufferSize)
+uint8_t BSP_SDRAM_WriteDataDMA(uint32_t pAddress, uint32_t *pDstBuffer, uint32_t BufferSize)
 {
 	if (HAL_SDRAM_Write_DMA(&SDRAM_Handle, (uint32_t *)pAddress, pDstBuffer, BufferSize) != HAL_OK)
 	{
@@ -250,7 +250,7 @@ uint8_t SDRAM_WriteDataDMA(uint32_t pAddress, uint32_t *pDstBuffer, uint32_t Buf
 *note：无
 * ************************************************************************************************
  */
-uint8_t SDRAM_SendCmd(FMC_SDRAM_CommandTypeDef *SdramCmd)
+uint8_t BSP_SDRAM_SendCmd(FMC_SDRAM_CommandTypeDef *SdramCmd)
 {
 	if (HAL_SDRAM_SendCommand(&SDRAM_Handle, SdramCmd, SDRAM_TIME_OUT) != HAL_OK)
 	{
@@ -281,7 +281,7 @@ void SDRAM_DMA_IRQHandler(void)
 *note：该函数初始化SDARM的GPIO和外设时钟
 * ************************************************************************************************
  */
-static void SDRAM_MspInit(SDRAM_HandleTypeDef *HSDRAM)
+static void BSP_SDRAM_MspInit(SDRAM_HandleTypeDef *HSDRAM)
 {
   static DMA_HandleTypeDef DMA_Handle;
   GPIO_InitTypeDef GPIO_InitStructure;
@@ -376,7 +376,7 @@ static void SDRAM_MspInit(SDRAM_HandleTypeDef *HSDRAM)
 *note：该函数没有恢复GPIO和外设的时钟，需要用户程序自行恢复。
 * ************************************************************************************************
  */
-__weak void SDRAM_MspDeInit(SDRAM_HandleTypeDef *HSDRAM )
+void BSP_SDRAM_MspDeInit(SDRAM_HandleTypeDef *HSDRAM )
 {
 	static DMA_HandleTypeDef DMA_Handle;
 

@@ -28,7 +28,7 @@ uint8_t BSP_TS_Init(uint16_t ts_SizeX, uint16_t ts_SizeY)
 			/*复位触摸屏*/
 			ft6x06_Reset(I2C_Address);
 			/*校正、配置、启动触摸屏驱动*/
-			ft6x06_TS_Startt(I2C_Address);
+			ft6x06_TS_Start(I2C_Address);
 		}
 	}
 	else

@@ -17,8 +17,8 @@
 #include "./Font/fonts.h"
 
 DMA2D_HandleTypeDef 		DMA2D_Handle;
-static DSI_HandleTypeDef	DSI_Handle;
-static LTDC_HandleTypeDef 	LTDC_Handle;
+DSI_HandleTypeDef	DSI_Handle;
+LTDC_HandleTypeDef 	LTDC_Handle;
 static DSI_VidCfgTypeDef  	DSI_VideoStru;
 
 static LCD_DrawPropTypeDef DrawProp[LTDC_MAX_LAYER_NUMBER];
@@ -147,7 +147,7 @@ uint8_t BSP_LCD_Init(LCD_OrientationTypeDef orientation)
 
 /*******************************LTDC配置*********************************************/
 	PeriphClkInitStruct.PeriphClockSelection = RCC_PERIPHCLK_LTDC;
-	PeriphClkInitStruct.PLLSAI.PLLSAIN       = 384;
+	PeriphClkInitStruct.PLLSAI.PLLSAIN       = 369;
 	PeriphClkInitStruct.PLLSAI.PLLSAIR       = 7;
 	PeriphClkInitStruct.PLLSAIDivR           = RCC_PLLSAIDIVR_2;
 	
@@ -164,9 +164,9 @@ uint8_t BSP_LCD_Init(LCD_OrientationTypeDef orientation)
 	LTDC_Handle.Init.TotalWidth         = (lcd_x_size + HSA +HBP + HFP - 1);
 
 	/*配置默认背景颜色*/
-	LTDC_Handle.Init.Backcolor.Blue  = 0x00 ;
-	LTDC_Handle.Init.Backcolor.Red   = 0x00 ;
-	LTDC_Handle.Init.Backcolor.Green = 0x00 ;
+	LTDC_Handle.Init.Backcolor.Blue  = 0xFF ;
+	LTDC_Handle.Init.Backcolor.Red   = 0xFF ;
+	LTDC_Handle.Init.Backcolor.Green = 0xFF ;
 
 	HAL_LTDC_StructInitFromVideoConfig(&LTDC_Handle, &DSI_VideoStru);
 
@@ -178,7 +178,10 @@ uint8_t BSP_LCD_Init(LCD_OrientationTypeDef orientation)
 	  
 	OTM8009A_Init(DSI_VideoStru.ColorCoding, orientation);
 
+	
 	return LCD_OK;
+
+	HAL_LTDC_ProgramLineEvent(&LTDC_Handle, 0);
   
 }
 /*
@@ -322,7 +325,7 @@ void BSP_LCD_LayerDefaultInit(uint16_t LayerIndex, uint32_t FB_Address)
 
 	HAL_LTDC_ConfigLayer(&LTDC_Handle, &LayerCfgStru, LayerIndex);
 
-	DrawProp[LayerIndex].BackColor = LCD_COLOR_RED;
+	DrawProp[LayerIndex].BackColor = LCD_COLOR_WHITE;
 	DrawProp[LayerIndex].TextColor = LCD_COLOR_BLUE;
 	DrawProp[LayerIndex].pFont     = &Font24;
 }
@@ -1309,7 +1312,7 @@ __weak void LCD_LTDC_ER_IRQHandler(void)
   * @brief  Handles DMA2D interrupt request.
   * @note : Can be surcharged by application code implementation of the function.
   */
-__weak void LCD_DMA2D_IRQHandler(void)
+__weak void BSP_LCD_DMA2D_IRQHandler(void)
 {
   HAL_DMA2D_IRQHandler(&DMA2D_Handle);
 }
