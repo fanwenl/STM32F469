@@ -4,6 +4,9 @@
   <project>
     <path>$WS_DIR$\MyAPP.ewp</path>
   </project>
+  <project>
+    <path>$WS_DIR$\..\FatFs\MyAPP.ewp</path>
+  </project>
   <batchBuild/>
 </workspace>
 

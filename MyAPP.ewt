@@ -2126,7 +2126,16 @@
         <name>$PROJ_DIR$\Drivers\BSP\bsp_lcd.c</name>
       </file>
       <file>
+        <name>$PROJ_DIR$\Drivers\BSP\bsp_sd.c</name>
+      </file>
+      <file>
         <name>$PROJ_DIR$\Drivers\BSP\bsp_sdram.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\Drivers\BSP\bsp_ts.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\Drivers\BSP\ft6x06.c</name>
       </file>
       <file>
         <name>$PROJ_DIR$\Drivers\BSP\otm8009a.c</name>
@@ -2354,9 +2363,150 @@
   </group>
   <group>
     <name>FatFs</name>
+    <file>
+      <name>$PROJ_DIR$\FatFs\diskio.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\FatFs\ff.c</name>
+    </file>
   </group>
   <group>
     <name>STemWin</name>
+    <group>
+      <name>Config</name>
+      <file>
+        <name>$PROJ_DIR$\STemWin\Config\GUIConf.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\STemWin\Config\LCDConf.c</name>
+      </file>
+    </group>
+    <group>
+      <name>Lib</name>
+      <file>
+        <name>$PROJ_DIR$\STemWin\Lib\STemWin528_CM4_IAR.a</name>
+      </file>
+    </group>
+    <group>
+      <name>OS</name>
+      <file>
+        <name>$PROJ_DIR$\STemWin\OS\GUI_X.c</name>
+      </file>
+    </group>
+    <group>
+      <name>PNGLib</name>
+      <file>
+        <name>$PROJ_DIR$\STemWin\PNGLib\adler32.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\STemWin\PNGLib\compress.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\STemWin\PNGLib\crc32.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\STemWin\PNGLib\deflate.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\STemWin\PNGLib\GUI_PNG.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\STemWin\PNGLib\gzio.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\STemWin\PNGLib\IMAGE_PNG.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\STemWin\PNGLib\infback.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\STemWin\PNGLib\inffast.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\STemWin\PNGLib\inflate.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\STemWin\PNGLib\inftrees.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\STemWin\PNGLib\png.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\STemWin\PNGLib\pngerror.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\STemWin\PNGLib\pnggccrd.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\STemWin\PNGLib\pngget.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\STemWin\PNGLib\pngmem.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\STemWin\PNGLib\pngpread.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\STemWin\PNGLib\pngread.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\STemWin\PNGLib\pngrio.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\STemWin\PNGLib\pngrtran.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\STemWin\PNGLib\pngrutil.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\STemWin\PNGLib\pngset.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\STemWin\PNGLib\pngtrans.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\STemWin\PNGLib\pngvcrd.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\STemWin\PNGLib\pngwio.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\STemWin\PNGLib\pngwrite.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\STemWin\PNGLib\pngwtran.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\STemWin\PNGLib\pngwutil.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\STemWin\PNGLib\trees.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\STemWin\PNGLib\uncompr.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\STemWin\PNGLib\zutil.c</name>
+      </file>
+    </group>
+  </group>
+  <group>
+    <name>SysFun</name>
+    <file>
+      <name>$PROJ_DIR$\SysFun\displaybmp.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\SysFun\displaygif.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\SysFun\displayjpeg.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\SysFun\displaypng.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\SysFun\malloc.c</name>
+    </file>
   </group>
   <group>
     <name>&#x3BC;cosii</name>
