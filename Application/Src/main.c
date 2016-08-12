@@ -85,7 +85,7 @@ static void AppTaskStart (void *p_arg)
 	SystemClock_Config();
 
 	/*初始化SDRAM*/
-	SDRAM_Init();
+	BSP_SDRAM_Init();
 
 	/*初始化GUI图形库*/	
 //	GUI_Init();

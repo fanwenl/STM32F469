@@ -41,11 +41,27 @@
 
 /* Includes ------------------------------------------------------------------*/
 #include "stm32f4xx_hal.h"
+#include "stdio.h"
 #include "bsp.h"
-#include "ucos_ii.h"
 #include "bsp_sdram.h"
 #include "bsp_lcd.h"
-#include "stdio.h"
+#include "bsp_sd.h"
+#include "bsp_ts.h"
+
+#include "ucos_ii.h"
+
+#include "GUI.h"
+#include "WM.h"
+#include "ff.h"
+
+#include "malloc.h"
+
+#include "calibration.h"
+
+#include "displaybmp.h"
+#include "displaygif.h"
+#include "displayjpeg.h"
+#include "displaypng.h"
 
 /* Exported types ------------------------------------------------------------*/
 /* Exported constants --------------------------------------------------------*/
