@@ -12,8 +12,9 @@ ByteLimit=50
 CStepIntDis=_ 0
 stlinkserialNo=27DDF3A5
 stlinkfoundProbes=
+LeaveTargetRunning=_ 0
 [DebugChecksum]
-Checksum=-241729098
+Checksum=978109843
 [CodeCoverage]
 Enabled=_ 0
 [Exceptions]
@@ -70,6 +71,8 @@ ShowSource=1
 [Simulator]
 Freq=180000000
 MultiCoreRunAll=1
+[watch_formats]
+Fmt0={W}42:time	3	0
 [Trace2]
 Enabled=0
 ShowSource=0
@@ -132,7 +135,7 @@ Graph=0
 Symbiont=0
 Exclusions=
 [CallStackLog]
-Enabled=1
+Enabled=0
 [CallStackStripe]
 ShowTiming=0
 [Disassemble mode]
@@ -142,7 +145,13 @@ Bp0=_ 0 "EMUL_DATA" "SDRAM_ReadDataDMA" 0 0 0 0 4294967295
 Bp1=_ 0 "EMUL_DATA" "printf" 0 0 0 0 4294967295
 Bp2=_ 0 "EMUL_DATA_LOG" "SDRAM_WriteDataDMA" 0 0
 Bp3=_ 0 "EMUL_DATA_LOG" "SDRAM_ReadDataDMA" 0 0
-Count=4
+Bp4=_ 0 "EMUL_CODE" "{$PROJ_DIR$\Drivers\BSP\bsp_sd.c}.20.2" 0 0 1 "" 0 "" 0
+Bp5=_ 0 "EMUL_CODE" "{$PROJ_DIR$\STemWin\Config\LCDConf.c}.194.3" 0 0 1 "" 0 "" 0
+Bp6=_ 0 "EMUL_CODE" "{$PROJ_DIR$\STemWin\Config\GUIConf.c}.86.8" 0 0 1 "" 0 "" 0
+Bp7=_ 1 "EMUL_CODE" "{$PROJ_DIR$\Drivers\Startup\startup_stm32f469xx.s}.254.1" 0 0 1 "" 0 "" 0
+Bp8=_ 1 "EMUL_CODE" "{$PROJ_DIR$\Application\Src\main.c}.142.2" 0 0 1 "" 0 "" 0
+Bp9=_ 1 "EMUL_CODE" "{$PROJ_DIR$\Application\Src\main.c}.182.2" 0 0 1 "" 0 "" 0
+Count=10
 [Aliases]
 Count=0
 SuppressDialog=0

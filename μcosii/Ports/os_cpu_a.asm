@@ -150,12 +150,12 @@ OS_CPU_FP_Reg_Pop
 ;                 }
 ;********************************************************************************************************
 
-OS_CPU_SR_Save          /*关中断 ，实现将PRIMASK的值传给R0.恢复时再讲R0传回去。*/
-    MRS     R0, PRIMASK                                         ; Set prio int mask to mask all (except faults)
+OS_CPU_SR_Save          ;关中断 ，实现将PRIMASK的值传给R0.恢复时再讲R0传回去。*/
+    MRS     R0, PRIMASK                      ; Set prio int mask to mask all (except faults)
     CPSID   I
     BX      LR
 
-OS_CPU_SR_Restore       /*开中断*/
+OS_CPU_SR_Restore       ;开中断*/
     MSR     PRIMASK, R0
     BX      LR
 
@@ -269,7 +269,9 @@ OSIntCtxSw
 OS_CPU_PendSVHandler
     CPSID   I                                                   ; Prevent interruption during context switch
     MRS     R0, PSP                                             ; PSP is process stack pointer
-    CBZ     R0, OS_CPU_PendSVHandler_nosave                     ; Skip register save the first time
+    AND		LR,LR, #0xFFFFFFE0
+	 ORR		LR,LR, #0x9
+	 CBZ     R0, OS_CPU_PendSVHandler_nosave                     ; Skip register save the first time
 
     SUBS    R0, R0, #0x20                                       ; Save remaining regs r4-11 on process stack
     STM     R0, {R4-R11}

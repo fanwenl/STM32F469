@@ -6,17 +6,19 @@
 
 "-p" 
 
-"D:\IAR Systems\Embedded Workbench 7.2\arm\CONFIG\debugger\ST\STM32F469NI.ddf" 
+"D:\IAR Systems\Embedded Workbench 7.4\arm\CONFIG\debugger\ST\STM32F469NI.ddf" 
 
 "--semihosting" 
 
 "--device=STM32F469NI" 
 
+"--drv_debug_ap=0" 
+
 "--drv_interface=SWD" 
 
 "--stlink_reset_strategy=0,0" 
 
-"--drv_swo_clock_setup=180000000,0,2000000" 
+"--drv_swo_clock_setup=180000000,1,2000000" 
 
 "--drv_catch_exceptions=0x000" 
 

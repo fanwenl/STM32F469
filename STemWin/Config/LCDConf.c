@@ -55,6 +55,9 @@ Purpose     : Display controller configuration (single layer)
 #include "GUIDRV_Lin.h"
 #include "LCDConf.h"
 
+#ifdef OS_SUPPORT 
+	#include "ucos_ii.h"
+#endif
 /*********************************************************************
 *
 *       Layer configuration (to be modified)

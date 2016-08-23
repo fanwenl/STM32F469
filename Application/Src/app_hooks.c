@@ -8,7 +8,7 @@ uint16_t time = 0u;   /*系统时钟节拍全局变量*/
  */
 void App_TimeTickHook(void)
 {
-	if(time == 1000u)
+	if(time == 500u)
 	{
 		time = 0;
 		BSP_LED_Toggle(LED4); /*系统时钟指示灯*/
@@ -29,6 +29,9 @@ void App_TaskDelHook(OS_TCB *ptcb)
 {}
 void App_TCBInitHook(OS_TCB *ptcb)
 {}
+/**
+ * [App_TaskIdleHook 空闲任务指示灯]
+ */
 void App_TaskIdleHook(void)
 {
 	BSP_LED_Toggle(LED3);	

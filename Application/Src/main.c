@@ -22,13 +22,15 @@
 /* Private define ------------------------------------------------------------*/
 /* Private macro -------------------------------------------------------------*/
 /* Private variables ---------------------------------------------------------*/
-static OS_STK App_TaskStartStk[APP_CFG_TASK_START_STK_SIZE-1];
+static OS_STK App_StartTaskStk[APP_CFG_START_TASK_STK_SIZE-1];
 static OS_STK App_MainTaskStk[APP_CFG_MAIN_TASK_STK_SIZE-1];
 static OS_STK App_MonitorTaskStk[APP_CFG_MONITOR_TASK_STK_SIZE-1];
+FATFS SDFatFs;  /* File system object for SD disk logical drive */
+FIL MyFile;     /* File object */
 /* Private function prototypes -----------------------------------------------*/
 static void SystemClock_Config(void);
 static void Error_Handler(void);
-static void AppTaskStart (void *p_arg);
+static void AppStartTask (void *p_arg);
 static void AppMainTask (void *p_arg);
 static void AppMonitorTask (void *p_arg);
 
@@ -44,23 +46,39 @@ int main(void)
 #if (OS_TASK_NAME_EN > 0u)
 	uint8_t os_err; 
 #endif
-
-	HAL_Init();   
 	
+	HAL_Init();
+	
+	SystemClock_Config();
+	
+	BSP_LED_Init(LED1);
+	BSP_LED_Init(LED2);
+	BSP_LED_Init(LED3);
+	BSP_LED_Init(LED4);
+
+	/*初始化SDRAM*/
+//	BSP_SDRAM_Init();
+		
 	OSInit();
 	
 	/*创建起始任务*/
-	OSTaskCreate(AppTaskStart,
-					 0,
-					 &App_TaskStartStk[APP_CFG_TASK_START_STK_SIZE-1],
-					 APP_CFG_TASK_START_PRIO);
+	OSTaskCreateExt(AppStartTask,
+					 (void *)0,
+					 &App_StartTaskStk[APP_CFG_START_TASK_STK_SIZE-1],
+					 APP_CFG_START_TASK_PRIO,
+					 3,
+					 &App_StartTaskStk[0],
+					 APP_CFG_START_TASK_STK_SIZE,
+					 (void *)0, 
+					 OS_TASK_OPT_STK_CHK | OS_TASK_OPT_STK_CLR | OS_TASK_OPT_SAVE_FP
+					 );
 	
 #if (OS_TASK_NAME_EN > 0u)
-	OSTaskNameSet(APP_CFG_TASK_START_PRIO,
-					  "App_Task_Start",
+	OSTaskNameSet(APP_CFG_START_TASK_PRIO,
+					  "App_Start_Task",
 					  &os_err); 
 #endif
-  
+
 	OSStart();
   
   while (1)
@@ -74,58 +92,95 @@ int main(void)
  * @note	该函数主要初始化外设，创建主要任务，完成后该任务挂起
  *       死机后可重启该任务。
  */
-static void AppTaskStart (void *p_arg)
+static void AppStartTask (void *p_arg)
 {
 	p_arg = p_arg;
+	OS_CPU_SR  cpu_sr;
+//	uint8_t res;
+//	SD_CardInfo hhh;
   
 #if (OS_TASK_NAME_EN >0u)
 	uint8_t os_err; 
 #endif
 	/* 配置系统主时钟为180 MHz */
-	SystemClock_Config();
+//	SystemClock_Config();
 
 	/*初始化SDRAM*/
-	BSP_SDRAM_Init();
+//	BSP_SDRAM_Init();
+	
+//	mallco_dev.init(SRAMEX);
 
+	/*使能CRC模块*/
+//	__HAL_RCC_CRC_CLK_ENABLE(); 
+	
+//	BSP_TS_Init(480, 800);
+	
+//	res = f_mount(&SDFatFs,"0:", 1);
+//	printf("mount result:%d\n",res);
+	
 	/*初始化GUI图形库*/	
 //	GUI_Init();
 	
 	/*初始化LED外设*/
-	BSP_LED_Init(LED1);
-	BSP_LED_Init(LED2);
-	BSP_LED_Init(LED3);
-	BSP_LED_Init(LED4);
+//	BSP_LED_Init(LED1);
+//	BSP_LED_Init(LED2);
+//	BSP_LED_Init(LED3);
+//	BSP_LED_Init(LED4);
 
 	/*初始用户按键*/
-	BSP_Button_Init(User_Button,Button_Mode_GPIO);
+//	BSP_Button_Init(User_Button,Button_Mode_GPIO);
 	
+//  GUI_SetBkColor(GUI_WHITE);
+	 
+//  GUI_Clear();
+  
+//  GUI_SetColor(GUI_BLACK);
+ 
+//  GUI_DispStringAt("hello world\n",0,0);
+  
 	/*建立统计任务*/
 	OSStatInit ();
 	
-	/*创建主任务*/
-	OSTaskCreate(AppMainTask,
+	OS_ENTER_CRITICAL();
+	/*创建主任�*/
+	OSTaskCreateExt(AppMainTask,
 					 (void *)0,
 					 &App_MainTaskStk[APP_CFG_MAIN_TASK_STK_SIZE-1],
-					 APP_CFG_MAIN_TASK_PRIO);
+					 APP_CFG_MAIN_TASK_PRIO,
+					 4,
+					 &App_MainTaskStk[0],
+					 APP_CFG_MAIN_TASK_STK_SIZE,
+					 (void *)0,
+					 OS_TASK_OPT_STK_CHK | OS_TASK_OPT_STK_CLR |OS_TASK_OPT_SAVE_FP
+					);
 	
 #if (OS_TASK_NAME_EN >0u)
 	OSTaskNameSet(APP_CFG_MAIN_TASK_PRIO,
 					  "APP_Main_Task",
 					  &os_err);
 #endif
-	/*创建一个监视任务*/
-		OSTaskCreate(AppMonitorTask,
+	/*创建一个监视任�*/
+		OSTaskCreateExt(AppMonitorTask,
 					 (void *)0,
-					 &App_MonitorTaskStk[APP_CFG_MAIN_TASK_STK_SIZE-1],
-					 APP_CFG_MONITOR_TASK_PRIO);
+					 &App_MonitorTaskStk[APP_CFG_MONITOR_TASK_STK_SIZE-1],
+					 APP_CFG_MONITOR_TASK_PRIO,
+					 5,
+					 &App_MonitorTaskStk[0],
+					 APP_CFG_MONITOR_TASK_STK_SIZE,
+					(void *)0,
+					OS_TASK_OPT_STK_CHK | OS_TASK_OPT_STK_CLR |OS_TASK_OPT_SAVE_FP 
+					);
 	
 #if (OS_TASK_NAME_EN >0u)
 	OSTaskNameSet(APP_CFG_MONITOR_TASK_PRIO,
 					  "APP_Monitor_Task",
 					  &os_err);
 #endif
+	
+	OS_EXIT_CRITICAL();
 	/*挂起启动任务*/
 	OSTaskSuspend(OS_PRIO_SELF);
+	
 	
 	for(;;)
 	{
@@ -140,18 +195,26 @@ static void AppMainTask (void *p_arg)
 {
 	p_arg = p_arg;
 	for(;;)
-	{
+	{ 
 		BSP_LED_Toggle(LED2);
 		OSTimeDly(100);
-		if(BSP_Button_GetState(User_Button) == (uint32_t)1)
-		{
-			OSTimeDly(10);
-			if(BSP_Button_GetState(User_Button) == (uint32_t)1)
-			{
-			BSP_LED_Toggle(LED3);
-			while(BSP_Button_GetState(User_Button) == 1);
-			}
-		}
+//	GUI_SetBkColor(GUI_WHITE);
+	 
+//  GUI_Clear();
+  
+// GUI_SetColor(GUI_BLACK);
+ // GUI_X_Delay(1000);
+ 
+ // GUI_DispStringAt("hello world\n",0,0);
+//		if(BSP_Button_GetState(User_Button) == (uint32_t)1)
+//		{
+//			OSTimeDly(10);
+//			if(BSP_Button_GetState(User_Button) == (uint32_t)1)
+//			{
+//			BSP_LED_Toggle(LED3);
+//			while(BSP_Button_GetState(User_Button) == 1);
+//			}
+//		}
 	}	
 }
 static void AppMonitorTask (void *p_arg)
@@ -189,7 +252,8 @@ static void AppMonitorTask (void *p_arg)
 static void SystemClock_Config(void)
 {
   RCC_ClkInitTypeDef RCC_ClkInitStruct;         
-  RCC_OscInitTypeDef RCC_OscInitStruct;         
+  RCC_OscInitTypeDef RCC_OscInitStruct;
+  RCC_PeriphCLKInitTypeDef PeriphClkInitStruct;
   
   /* Enable Power Control clock */
   __HAL_RCC_PWR_CLK_ENABLE();
@@ -219,7 +283,15 @@ static void SystemClock_Config(void)
   if(HAL_PWREx_EnableOverDrive() != HAL_OK)
   {
 	 Error_Handler();
-  } 
+  }
+   /*配置*/
+  PeriphClkInitStruct.PeriphClockSelection = RCC_PERIPHCLK_SDIO | RCC_PERIPHCLK_CLK48;
+  PeriphClkInitStruct.SdioClockSelection = RCC_SDIOCLKSOURCE_CLK48;
+  PeriphClkInitStruct.Clk48ClockSelection = RCC_CK48CLKSOURCE_PLLSAIP;
+  PeriphClkInitStruct.PLLSAI.PLLSAIN = 384;
+  PeriphClkInitStruct.PLLSAI.PLLSAIP = RCC_PLLSAIP_DIV8;
+	  
+	HAL_RCCEx_PeriphCLKConfig(&PeriphClkInitStruct);
   /* Select PLL as system clock source and configure the HCLK, PCLK1 and PCLK2 
   clocks dividers */
   RCC_ClkInitStruct.ClockType = (RCC_CLOCKTYPE_SYSCLK | RCC_CLOCKTYPE_HCLK | RCC_CLOCKTYPE_PCLK1 | RCC_CLOCKTYPE_PCLK2);
@@ -237,11 +309,8 @@ HAL_StatusTypeDef HAL_InitTick(uint32_t TickPriority)
 {
   /*Configure the SysTick IRQ priority */
   HAL_NVIC_SetPriority(SysTick_IRQn, TickPriority ,0U);
-  //  if(OSRunning > 0u)
-  //  {
   /*Configure the SysTick to have interrupt in 1ms time basis*/
   HAL_SYSTICK_Config(SystemCoreClock/10000U);
-  //  }
   /* Return function status */
   return HAL_OK;
 }

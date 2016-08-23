@@ -16,6 +16,10 @@
 #include "./Font/font8.c"
 #include "./Font/fonts.h"
 
+#ifdef OS_SUPPORT 
+	#include "ucos_ii.h"
+#endif
+
 DMA2D_HandleTypeDef 		DMA2D_Handle;
 DSI_HandleTypeDef	DSI_Handle;
 LTDC_HandleTypeDef 	LTDC_Handle;
@@ -1306,7 +1310,24 @@ static void LL_FillBuffer(uint32_t LayerIndex, void *pDst, uint32_t xSize, uint3
 
 __weak void LCD_LTDC_ER_IRQHandler(void)
 {
+	
+#ifdef OS_SUPPORT 
+	OS_CPU_SR  cpu_sr;
+#endif
+
+#ifdef OS_SUPPORT 
+	OS_ENTER_CRITICAL();
+#endif
+	OSIntEnter();
+#ifdef OS_SUPPORT 
+	OS_EXIT_CRITICAL();
+#endif
+	
   HAL_LTDC_IRQHandler(&LTDC_Handle);
+  
+#ifdef OS_SUPPORT 
+	OSIntExit();
+#endif
 }
 /**
   * @brief  Handles DMA2D interrupt request.
@@ -1314,7 +1335,24 @@ __weak void LCD_LTDC_ER_IRQHandler(void)
   */
 __weak void BSP_LCD_DMA2D_IRQHandler(void)
 {
-  HAL_DMA2D_IRQHandler(&DMA2D_Handle);
+#ifdef OS_SUPPORT 
+	OS_CPU_SR  cpu_sr;
+#endif
+
+#ifdef OS_SUPPORT 
+	OS_ENTER_CRITICAL();
+#endif
+	OSIntEnter();
+#ifdef OS_SUPPORT 
+	OS_EXIT_CRITICAL();
+#endif
+	
+   HAL_DMA2D_IRQHandler(&DMA2D_Handle);
+  
+#ifdef OS_SUPPORT 
+	OSIntExit();
+#endif
+ 
 }
 
 /**
@@ -1323,7 +1361,22 @@ __weak void BSP_LCD_DMA2D_IRQHandler(void)
   */
 __weak void LCD_DSI_IRQHandler(void)
 {
+#ifdef OS_SUPPORT 
+	OS_CPU_SR  cpu_sr;
+#endif
+#ifdef OS_SUPPORT 
+	OS_ENTER_CRITICAL();
+#endif
+	OSIntEnter();
+#ifdef OS_SUPPORT 
+	OS_EXIT_CRITICAL();
+#endif
+	
   HAL_DSI_IRQHandler(&DSI_Handle);
+  
+#ifdef OS_SUPPORT 
+	OSIntExit();
+#endif
 }
 
 
@@ -1333,5 +1386,21 @@ __weak void LCD_DSI_IRQHandler(void)
   */
 __weak void LCD_LTDC_IRQHandler(void)
 {
-  HAL_LTDC_IRQHandler(&LTDC_Handle);
+#ifdef OS_SUPPORT 
+	OS_CPU_SR  cpu_sr;
+#endif
+#ifdef OS_SUPPORT 
+	OS_ENTER_CRITICAL();
+#endif
+	OSIntEnter();
+#ifdef OS_SUPPORT 
+	OS_EXIT_CRITICAL();
+#endif
+	
+   HAL_LTDC_IRQHandler(&LTDC_Handle);
+  
+#ifdef OS_SUPPORT 
+	OSIntExit();
+#endif
+  
 }

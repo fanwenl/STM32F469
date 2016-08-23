@@ -9,12 +9,16 @@
 */
 #include "bsp_sdram.h"
 
+#ifdef OS_SUPPORT 
+	#include "ucos_ii.h"
+#endif
+
 /*
 **************************************************************************************************
 *										SDRAM公用结构体定义
 **************************************************************************************************
  */
-static SDRAM_HandleTypeDef SDRAM_Handle;
+static SDRAM_HandleTypeDef 		SDRAM_Handle;
 static FMC_SDRAM_TimingTypeDef  TimStructure;
 /*
 **************************************************************************************************
@@ -271,7 +275,23 @@ uint8_t BSP_SDRAM_SendCmd(FMC_SDRAM_CommandTypeDef *SdramCmd)
  */
 void SDRAM_DMA_IRQHandler(void)
 {
-	  HAL_DMA_IRQHandler(SDRAM_Handle.hdma);
+//#ifdef OS_SUPPORT 
+//	OS_CPU_SR  cpu_sr;
+//#endif
+//
+//#ifdef OS_SUPPORT 
+//	OS_ENTER_CRITICAL();
+//#endif
+//	OSIntEnter();
+//#ifdef OS_SUPPORT 
+//	OS_EXIT_CRITICAL();
+//#endif
+
+//	HAL_DMA_IRQHandler(SDRAM_Handle.hdma);
+
+//#ifdef OS_SUPPORT 
+//	OSIntExit();
+//#endif	  
 }
 /*
 **************************************************************************************************
@@ -357,6 +377,7 @@ static void BSP_SDRAM_MspInit(SDRAM_HandleTypeDef *HSDRAM)
 		DMA_Handle.Init.PeriphDataAlignment = DMA_PDATAALIGN_WORD;		/*外设数据大小32bit*/
 		DMA_Handle.Init.PeriphInc 				= DMA_PINC_ENABLE; 			/*外设DMA自动增加模式*/
 		DMA_Handle.Init.Priority 				= DMA_PRIORITY_HIGH; 		/*DMA优先级高*/
+		
 		DMA_Handle.Instance = SDRAM_DMA_STREAM;     /*DMA Stream 寄存器地址*/
 		__HAL_LINKDMA(HSDRAM, hdma,DMA_Handle);	  /*链接DAM*/
 		

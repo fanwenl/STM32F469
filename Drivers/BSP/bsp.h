@@ -63,7 +63,7 @@ void 	BSP_LED_Init(Led_TypeDef Led);
 void 	BSP_LED_DeInit(Led_TypeDef Led);	
 void 	BSP_LED_On(Led_TypeDef Led);
 void 	BSP_LED_Off(Led_TypeDef Led);
-void 	BSP_LED_Toggle(Led_TypeDef);
+void 	BSP_LED_Toggle(Led_TypeDef Led);
 void 	BSP_Button_Init(Button_TypeDef Button,ButtonMode_TypeDef Button_Mode);
 void 	BSP_Button_DeInit(Button_TypeDef Button);
 uint32_t BSP_Button_GetState(Button_TypeDef Button);
@@ -74,10 +74,10 @@ void OTM8009A_IO_Delay(uint32_t delay);
 * **************************************************************************************************
  */
 /*定义LED灯的GPIO_PIN*/
-#define LED1_PIN					((uint32_t)GPIO_PIN_6)
-#define LED2_PIN					((uint32_t)GPIO_PIN_4)
-#define LED3_PIN					((uint32_t)GPIO_PIN_5)
-#define LED4_PIN					((uint32_t)GPIO_PIN_3)
+#define LED1_PIN						((uint32_t)GPIO_PIN_6)
+#define LED2_PIN						((uint32_t)GPIO_PIN_4)
+#define LED3_PIN						((uint32_t)GPIO_PIN_5)
+#define LED4_PIN						((uint32_t)GPIO_PIN_3)
 /*定义LED灯的GPIO_PORT*/
 #define LED1_GPIO_PORT				((GPIO_TypeDef *)GPIOG)
 #define LED2_GPIO_PORT				((GPIO_TypeDef *)GPIOD)
@@ -98,16 +98,16 @@ void OTM8009A_IO_Delay(uint32_t delay);
 *												按键定义
 * **************************************************************************************************
  */
-#define USER_BUTTON_PIN                     GPIO_PIN_0
-#define USER_BUTTON_GPIO_PORT             	((GPIO_TypeDef *)GPIOA)
-#define USER_BUTTON_EXTI_IRQn             	EXTI0_IRQn
-#define BUTTON_GPIO_CLK_ENABLE()            __HAL_RCC_GPIOA_CLK_ENABLE()
+#define USER_BUTTON_PIN					GPIO_PIN_0
+#define USER_BUTTON_GPIO_PORT			((GPIO_TypeDef *)GPIOA)
+#define USER_BUTTON_EXTI_IRQn			EXTI0_IRQn
+#define BUTTON_GPIO_CLK_ENABLE()		__HAL_RCC_GPIOA_CLK_ENABLE()
 
-#define TS_INT_PIN                        ((uint32_t)GPIO_PIN_5)
-#define TS_INT_GPIO_PORT                  ((GPIO_TypeDef*)GPIOJ)
-#define TS_INT_GPIO_CLK_ENABLE()          __HAL_RCC_GPIOJ_CLK_ENABLE()
-#define TS_INT_GPIO_CLK_DISABLE()         __HAL_RCC_GPIOJ_CLK_DISABLE()
-#define TS_INT_EXTI_IRQn                  EXTI9_5_IRQn
+#define TS_INT_PIN						((uint32_t)GPIO_PIN_5)
+#define TS_INT_GPIO_PORT				((GPIO_TypeDef*)GPIOJ)
+#define TS_INT_GPIO_CLK_ENABLE()		__HAL_RCC_GPIOJ_CLK_ENABLE()
+#define TS_INT_GPIO_CLK_DISABLE()	__HAL_RCC_GPIOJ_CLK_DISABLE()
+#define TS_INT_EXTI_IRQn				EXTI9_5_IRQn
 
 /*
 ****************************************************************************************************

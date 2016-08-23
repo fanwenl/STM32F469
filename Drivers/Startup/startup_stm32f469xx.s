@@ -61,7 +61,8 @@
         SECTION CSTACK:DATA:NOROOT(3)
 
         SECTION .intvec:CODE:NOROOT(2)
-
+		  
+		  EXTERN HardFault_Handler_C
         EXTERN  __iar_program_start
         EXTERN  SystemInit
 		  EXTERN  OS_CPU_PendSVHandler
@@ -192,7 +193,7 @@ __vector_table
 Reset_Handler
 
         LDR     R0, =SystemInit
-        BLX     R0
+        BLX     R0  
         LDR     R0, =__iar_program_start
         BX      R0
 
@@ -204,7 +205,13 @@ NMI_Handler
         PUBWEAK HardFault_Handler
         SECTION .text:CODE:REORDER:NOROOT(1)
 HardFault_Handler
-        B HardFault_Handler
+//        B HardFault_Handler
+			TST LR, #4
+			ITE EQ
+			MRSEQ R0, MSP
+			MRSNE R0, PSP
+			MOV R1, LR
+			B HardFault_Handler_C
 
         PUBWEAK MemManage_Handler
         SECTION .text:CODE:REORDER:NOROOT(1)

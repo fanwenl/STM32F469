@@ -63,41 +63,6 @@ static void mymemcpy(void *des,void *src,uint32_t n)
 static void mymemset(void *s,uint8_t c,uint32_t count)  
 {  
     uint8_t *xs = s;
-//	 uint8_t a =0xFF;
-//	 xs = (uint8_t *)0xc0000000;
-//	 BSP_SDRAM_WriteData(xs,&a,1);
-//	 xs = (uint8_t*)0xc0100000;
-//	 *xs = c;
-//	 xs = (uint8_t*)0xc0200000;
-//	 *xs = c;
-//	 xs = (uint8_t*)0xc0300000;
-//	 *xs = c;
-//	 xs = (uint8_t*)0xc0400000;
-//	 *xs = c;
-//	 xs = (uint8_t*)0xc0500000;
-//	 *xs = c;
-//	 xs = (uint8_t*)0xc0600000;
-//	 *xs = c;
-//	 xs = (uint8_t*)0xc0700000;
-//	 *xs = c;
-//	xs = (uint8_t*)0xc0800000;
-//	 *xs = c;	
-//	 xs = (uint8_t*)0xc0900000;
-//	 *xs = c;	
-//	 xs = (uint8_t*)0xc0a00000;
-//	 *xs = c;
-//	 xs = (uint8_t*)0xc0a00000;
-//	 *xs = c; 
-//	 xs = (uint8_t*)0xc0b00000;
-//	 *xs = c; 
-//	 xs = (uint8_t*)0xc0c00000;
-//	 *xs = c;
-//	 xs = (uint8_t*)0xc0d00000;
-//	 *xs = c; 
-//	 xs = (uint8_t*)0xc0e00000;
-//	 *xs = c;
-//	 xs = (uint8_t *)0xc1000000;
-//	 *xs = c;
     while(count--)*xs++=c;
 }	
 //内存管理初始化  

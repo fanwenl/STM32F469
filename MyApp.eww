@@ -5,7 +5,7 @@
     <path>$WS_DIR$\MyAPP.ewp</path>
   </project>
   <project>
-    <path>$WS_DIR$\..\FatFs\MyAPP.ewp</path>
+    <path>$WS_DIR$\..\ucosii\STM32F469I.ewp</path>
   </project>
   <batchBuild/>
 </workspace>

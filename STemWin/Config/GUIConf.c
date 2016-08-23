@@ -53,7 +53,6 @@ Purpose     : Display controller initialization
 
 #include "GUI.h"
 #include "malloc.h"
-
 /*********************************************************************
 *
 *       Defines
@@ -63,7 +62,7 @@ Purpose     : Display controller initialization
 //
 // Define the available number of bytes available for the GUI
 //
-#define GUI_NUMBYTES  (1024*1024*2)
+#define GUI_NUMBYTES  (1024*1024*5)
 #define GUI_BLOCKSIZE 0x80
 /*********************************************************************
 *

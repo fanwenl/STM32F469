@@ -12,9 +12,9 @@
 
 #ifdef __cplusplus
 extern "C" {
-#endif/*__cplusplus*/
+#endif	/*__cplusplus*/
 
-#include "bsp.h"
+#include "stm32f4xx_hal.h"
  
 /*
 **************************************************************************************************
@@ -46,10 +46,10 @@ extern "C" {
 *										SDRAM DAM通道和中断定义
 **************************************************************************************************
  */
-#define SDRAM_DMA_CHANNEL     DMA_CHANNEL_0 
-#define SDRAM_DMA_STREAM	  DMA2_Stream0
-#define SDRAM_DMA_IRQn 		  DMA2_Stream0_IRQn
-#define SDRAM_DMA_IRQHandler  DMA2_Stream0_IRQHandler
+#define SDRAM_DMA_CHANNEL		DMA_CHANNEL_0 
+#define SDRAM_DMA_STREAM		DMA2_Stream0
+#define SDRAM_DMA_IRQn			DMA2_Stream0_IRQn
+#define SDRAM_DMA_IRQHandler	DMA2_Stream0_IRQHandler
 /*
 **************************************************************************************************
 *										SDRAM模式寄存器参数定义
@@ -72,13 +72,13 @@ extern "C" {
 *										SDRAM驱动外部函申明
 **************************************************************************************************
  */ 
-uint8_t SDRAM_Init(void);
-uint8_t SDRAM_DeInit(void);
-uint8_t SDRAM_ReadData( uint32_t pAddress, uint32_t *pDstBuffer, uint32_t BufferSize);
-uint8_t SDRAM_ReadDataDMA( uint32_t pAddress, uint32_t *pDstBuffer, uint32_t BufferSize);
-uint8_t SDRAM_WriteData(uint32_t pAddress, uint32_t *pDstBuffer, uint32_t BufferSize);
-uint8_t SDRAM_WriteDataDMA(uint32_t pAddress, uint32_t *pDstBuffer, uint32_t BufferSize);
-uint8_t SDRAM_SendCmd(FMC_SDRAM_CommandTypeDef *SdramCmd);
+uint8_t BSP_SDRAM_Init(void);
+uint8_t BSP_SDRAM_DeInit(void);
+uint8_t BSP_SDRAM_ReadData( uint32_t pAddress, uint32_t *pDstBuffer, uint32_t BufferSize);
+uint8_t BSP_SDRAM_ReadDataDMA( uint32_t pAddress, uint32_t *pDstBuffer, uint32_t BufferSize);
+uint8_t BSP_SDRAM_WriteData(uint32_t pAddress, uint32_t *pDstBuffer, uint32_t BufferSize);
+uint8_t BSP_SDRAM_WriteDataDMA(uint32_t pAddress, uint32_t *pDstBuffer, uint32_t BufferSize);
+uint8_t BSP_SDRAM_SendCmd(FMC_SDRAM_CommandTypeDef *SdramCmd);
 
 void BSP_SDRAM_MspDeInit(SDRAM_HandleTypeDef *HSDRAM );
 void SDRAM_DMA_IRQHandler(void);
