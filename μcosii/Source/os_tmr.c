@@ -38,7 +38,7 @@
 *    OS_TASK_TMR_STK_SIZE      The size     of the Timer management task's stack
 *
 * 2) You must call OSTmrSignal() to notify the Timer management task that it's time to update the timers.
-* 3) OSTmrMatchå’ŒOSTmrTimeä¸¤ä¸ªå˜é‡åœ¨OSTmr_Init()ä¸­åˆå§‹åŒ–ä¸º0ï¼Œå€¼æº¢å‡ºåä»0å¼€å§‹è®¡æ•°ã€‚
+* 3) OSTmrMatchºÍOSTmrTimeÁ½¸ö±äÁ¿ÔÚOSTmr_Init()ÖĞ³õÊ¼»¯Îª0£¬ÖµÒç³öºó´Ó0¿ªÊ¼¼ÆÊı¡£
 *********************************************************************************************************
 */
 
@@ -77,7 +77,7 @@ static  void     OSTmr_Task          (void   *p_arg);
 *                            If the timer is configured for ONE-SHOT mode, this is the timeout used.
 *                            If the timer is configured for PERIODIC mode, this is the first timeout to 
 *                               wait for before the timer starts entering periodic mode.
-*                               (å†æ¬¡å¯åŠ¨å®šæ—¶å™¨æ—¶çš„ä¸€æ®µå»¶æ—¶æ—¶é—´)
+*                               (ÔÙ´ÎÆô¶¯¶¨Ê±Æ÷Ê±µÄÒ»¶ÎÑÓÊ±Ê±¼ä)
 *              period        The 'period' being repeated for the timer.
 *                               If you specified 'OS_TMR_OPT_PERIODIC' as an option, when the timer 
 *                               expires, it will automatically restart with the same period.
@@ -160,7 +160,7 @@ OS_TMR  *OSTmrCreate (INT32U           dly,
         *perr  = OS_ERR_TMR_ISR;
         return ((OS_TMR *)0);
     }
-    OSSchedLock();                                          /*é”å®šè°ƒåº¦å™¨*/
+    OSSchedLock();                                          /*Ëø¶¨µ÷¶ÈÆ÷*/
     ptmr = OSTmr_Alloc();                                   /* Obtain a timer from the free pool                      */
     if (ptmr == (OS_TMR *)0) {
         OSSchedUnlock();
@@ -168,7 +168,7 @@ OS_TMR  *OSTmrCreate (INT32U           dly,
         return ((OS_TMR *)0);
     }
     ptmr->OSTmrState       = OS_TMR_STATE_STOPPED;          /* Indicate that timer is not running yet                 */
-    ptmr->OSTmrDly         = dly;                           /*å‚æ•°èµ‹å€¼*/
+    ptmr->OSTmrDly         = dly;                           /*²ÎÊı¸³Öµ*/
     ptmr->OSTmrPeriod      = period;
     ptmr->OSTmrOpt         = opt;
     ptmr->OSTmrCallback    = callback;
@@ -234,7 +234,7 @@ BOOLEAN  OSTmrDel (OS_TMR  *ptmr,
         return (OS_FALSE);
     }
     OSSchedLock();
-    switch (ptmr->OSTmrState) {                            /*åˆ¤æ–­å®šæ—¶å™¨çš„çŠ¶æ€ï¼Œæ ¹æ®ä¸åŒçš„çŠ¶æ€åˆ é™¤timer*/
+    switch (ptmr->OSTmrState) {                            /*ÅĞ¶Ï¶¨Ê±Æ÷µÄ×´Ì¬£¬¸ù¾İ²»Í¬µÄ×´Ì¬É¾³ıtimer*/
         case OS_TMR_STATE_RUNNING:
              OSTmr_Unlink(ptmr);                            /* Remove from current wheel spoke                        */
              OSTmr_Free(ptmr);                              /* Return timer to free list of timers                    */
@@ -319,7 +319,7 @@ INT8U  OSTmrNameGet (OS_TMR   *ptmr,
         *perr = OS_ERR_NAME_GET_ISR;
         return (0u);
     }
-    OSSchedLock();                                    /*å¦‚æœè¯¥timerä½¿ç”¨è¿‡ï¼Œåˆ™æœ‰nameï¼Œå¦åˆ™æ²¡æœ‰name*/
+    OSSchedLock();                                    /*Èç¹û¸ÃtimerÊ¹ÓÃ¹ı£¬ÔòÓĞname£¬·ñÔòÃ»ÓĞname*/
     switch (ptmr->OSTmrState) {
         case OS_TMR_STATE_RUNNING:
         case OS_TMR_STATE_STOPPED:
@@ -349,7 +349,7 @@ INT8U  OSTmrNameGet (OS_TMR   *ptmr,
 *                          GET HOW MUCH TIME IS LEFT BEFORE A TIMER EXPIRES
 *
 * Description: This function is called to get the number of ticks before a timer times out.
-*              (å®šæ—¶æ—¶é—´åˆ°ä¹‹å‰ï¼Œå‰©ä½™çš„ticksï¼Œå¦‚æœè¦ç®—å‰©ä½™çš„æ—¶é—´ï¼šticksä¹˜ä»¥å®šæ—¶å™¨çš„æœ€å°ç²¾åº¦)
+*              (¶¨Ê±Ê±¼äµ½Ö®Ç°£¬Ê£ÓàµÄticks£¬Èç¹ûÒªËãÊ£ÓàµÄÊ±¼ä£ºticks³ËÒÔ¶¨Ê±Æ÷µÄ×îĞ¡¾«¶È)
 * Arguments  : ptmr          Is a pointer to the timer to obtain the remaining time from.
 *
 *              perr          Is a pointer to an error code.  '*perr' will contain one of the following:
@@ -360,7 +360,7 @@ INT8U  OSTmrNameGet (OS_TMR   *ptmr,
 *                               OS_ERR_TMR_INACTIVE       'ptmr' points to a timer that is not active
 *                               OS_ERR_TMR_INVALID_STATE  the timer is in an invalid state
 *
-* Returns    : The time remaining for the timer to expire.  The time represents 'timer' increments(å¢åŠ ). 
+* Returns    : The time remaining for the timer to expire.  The time represents 'timer' increments(Ôö¼Ó). 
 *              In other words, if OSTmr_Task() is signaled every 1/10 of a second then the returned 
 *              value represents the number of 1/10 of a second remaining before the timer expires.
 *********************************************************************************************************
@@ -394,7 +394,7 @@ INT32U  OSTmrRemainGet (OS_TMR  *ptmr,
         return (0u);
     }
     OSSchedLock();
-    switch (ptmr->OSTmrState) {                         /*åŒºåˆ†ä¸åŒçš„æƒ…å†µ*/
+    switch (ptmr->OSTmrState) {                         /*Çø·Ö²»Í¬µÄÇé¿ö*/
         case OS_TMR_STATE_RUNNING:
              remain = ptmr->OSTmrMatch - OSTmrTime;    /* Determine how much time is left to timeout                  */
              OSSchedUnlock();
@@ -405,15 +405,15 @@ INT32U  OSTmrRemainGet (OS_TMR  *ptmr,
              switch (ptmr->OSTmrOpt) {
                  case OS_TMR_OPT_PERIODIC:
                       if (ptmr->OSTmrDly == 0u) {
-                          remain = ptmr->OSTmrPeriod;    /*Dlyä¸º0è¿”å›period*/
+                          remain = ptmr->OSTmrPeriod;    /*DlyÎª0·µ»Øperiod*/
                       } else {
-                          remain = ptmr->OSTmrDly;      /*å¦åˆ™æ”¾å›dly*/
+                          remain = ptmr->OSTmrDly;      /*·ñÔò·Å»Ødly*/
                       }
                       OSSchedUnlock();
                       *perr  = OS_ERR_NONE;
                       break;
 
-                 case OS_TMR_OPT_ONE_SHOT:               /*å•æ¬¡å»¶æ—¶è¿”å›Dly*/
+                 case OS_TMR_OPT_ONE_SHOT:               /*µ¥´ÎÑÓÊ±·µ»ØDly*/
                  default:
                       remain = ptmr->OSTmrDly;
                       OSSchedUnlock();
@@ -421,13 +421,13 @@ INT32U  OSTmrRemainGet (OS_TMR  *ptmr,
                       break;
              }
              return (remain);
-                                                        /*æ³¨æ„åŒºåˆ†stopå’Œcompletedçš„åŒºåˆ«çœ‹è‹±æ–‡æ³¨é‡Š*/
+                                                        /*×¢ÒâÇø·ÖstopºÍcompletedµÄÇø±ğ¿´Ó¢ÎÄ×¢ÊÍ*/
         case OS_TMR_STATE_COMPLETED:                   /* Only ONE-SHOT that timed out can be in this state           */
              OSSchedUnlock();
              *perr = OS_ERR_NONE;
-             return (0u);                               /*å·²ç»å®Œæˆæ”¾å›0*/
+             return (0u);                               /*ÒÑ¾­Íê³É·Å»Ø0*/
 
-        case OS_TMR_STATE_UNUSED:                       /*å®šæ—¶å™¨æ²¡æœ‰ä½¿ç”¨*/
+        case OS_TMR_STATE_UNUSED:                       /*¶¨Ê±Æ÷Ã»ÓĞÊ¹ÓÃ*/
              OSSchedUnlock();
              *perr = OS_ERR_TMR_INACTIVE;
              return (0u);
@@ -501,7 +501,7 @@ INT8U  OSTmrStateGet (OS_TMR  *ptmr,
         case OS_TMR_STATE_STOPPED:
         case OS_TMR_STATE_COMPLETED:
         case OS_TMR_STATE_RUNNING:
-             *perr = OS_ERR_NONE;                     /*åŒºåˆ†é”™è¯¯çš„ç±»å‹*/
+             *perr = OS_ERR_NONE;                     /*Çø·Ö´íÎóµÄÀàĞÍ*/
              break;
 
         default:
@@ -519,7 +519,7 @@ INT8U  OSTmrStateGet (OS_TMR  *ptmr,
 *                                            START A TIMER
 *
 * Description: This function is called by your application code to start a timer.
-*               (å°†å®šæ—¶å™¨timeré“¾æ¥åˆ°time wheelä¸­)
+*               (½«¶¨Ê±Æ÷timerÁ´½Óµ½time wheelÖĞ)
 * Arguments  : ptmr          Is a pointer to an OS_TMR
 *
 *              perr          Is a pointer to an error code.  '*perr' will contain one of the following:
@@ -565,7 +565,7 @@ BOOLEAN  OSTmrStart (OS_TMR   *ptmr,
         case OS_TMR_STATE_RUNNING:                          /* Restart the timer                                      */
              OSTmr_Unlink(ptmr);                            /* ... Stop the timer                                     */
              OSTmr_Link(ptmr, OS_TMR_LINK_DLY);             /* ... Link timer to timer wheel                          */
-             OSSchedUnlock();                               /*é‡æ–°linkå®šæ—¶å™¨*/
+             OSSchedUnlock();                               /*ÖØĞÂlink¶¨Ê±Æ÷*/
              *perr = OS_ERR_NONE;
              return (OS_TRUE);
 
@@ -600,16 +600,16 @@ BOOLEAN  OSTmrStart (OS_TMR   *ptmr,
 *
 *              opt           Allows you to specify an option to this functions which can be:
 *
-*                               OS_TMR_OPT_NONE          Do nothing special but stop the timer(ä¸åšä»»ä½•äº‹)
+*                               OS_TMR_OPT_NONE          Do nothing special but stop the timer(²»×öÈÎºÎÊÂ)
 *                               OS_TMR_OPT_CALLBACK      Execute the callback function, pass it the 
 *                                                        callback argument specified when the timer 
-*                                                        was created(è°ƒç”¨å›è°ƒå‡½æ•°ä½¿ç”¨åˆ›å»ºå®šæ—¶å™¨æ—¶çš„å‚æ•°).
+*                                                        was created(µ÷ÓÃ»Øµ÷º¯ÊıÊ¹ÓÃ´´½¨¶¨Ê±Æ÷Ê±µÄ²ÎÊı).
 *                               OS_TMR_OPT_CALLBACK_ARG  Execute the callback function, pass it the 
 *                                                        callback argument specified in THIS function call.
-*                                                         (è°ƒç”¨å›è°ƒå‡½æ•°ä½¿ç”¨è¯¥å‡½æ•°å£°æ˜ä¸­çš„å‚æ•°callback_arg)
+*                                                         (µ÷ÓÃ»Øµ÷º¯ÊıÊ¹ÓÃ¸Ãº¯ÊıÉùÃ÷ÖĞµÄ²ÎÊıcallback_arg)
 *              callback_arg  Is a pointer to a 'new' callback argument that can be passed to the callback 
 *                            function instead of the timer's callback argument.
-*                             (ä¸€ä¸ªæ–°çš„callbackå‚æ•°ï¼Œä¼ é€’ç»™å›è°ƒå‡½æ•°)  
+*                             (Ò»¸öĞÂµÄcallback²ÎÊı£¬´«µİ¸ø»Øµ÷º¯Êı)  
 *                             In other words, use 'callback_arg' passed in THIS function INSTEAD of 
 *                               ptmr->OSTmrCallbackArg.
 *
@@ -665,7 +665,7 @@ BOOLEAN  OSTmrStop (OS_TMR  *ptmr,
              OSTmr_Unlink(ptmr);                                  /* Remove from current wheel spoke                  */
              *perr = OS_ERR_NONE;
              switch (opt) {
-                 case OS_TMR_OPT_CALLBACK:                        /*åœæ­¢å®šæ—¶å™¨çš„æ—¶å€™è°ƒç”¨å›è°ƒå‡½æ•°*/
+                 case OS_TMR_OPT_CALLBACK:                        /*Í£Ö¹¶¨Ê±Æ÷µÄÊ±ºòµ÷ÓÃ»Øµ÷º¯Êı*/
                       pfnct = ptmr->OSTmrCallback;                /* Execute callback function if available ...       */
                       if (pfnct != (OS_TMR_CALLBACK)0) {
                           (*pfnct)((void *)ptmr, ptmr->OSTmrCallbackArg);  /* Use callback arg when timer was created */
@@ -738,7 +738,7 @@ INT8U  OSTmrSignal (void)
     INT8U  err;
 
 
-    err = OSSemPost(OSTmrSemSignal);   /*å‘é€ä¿¡å·é‡*/
+    err = OSSemPost(OSTmrSemSignal);   /*·¢ËÍĞÅºÅÁ¿*/
     return (err);
 }
 #endif
@@ -748,7 +748,7 @@ INT8U  OSTmrSignal (void)
 *********************************************************************************************************
 *                                      ALLOCATE AND FREE A TIMER
 *
-* Description: This function is called to allocate(åˆ†é…) a timer.
+* Description: This function is called to allocate(·ÖÅä) a timer.
 *
 * Arguments  : none
 *
@@ -766,7 +766,7 @@ static  OS_TMR  *OSTmr_Alloc (void)
         return ((OS_TMR *)0);
     }
     ptmr            = (OS_TMR *)OSTmrFreeList;
-    OSTmrFreeList   = (OS_TMR *)ptmr->OSTmrNext;      /*ä»å®šæ—¶å™¨åˆ—è¡¨ä¸­å–å‡ºä¸€ä¸ªç©ºçš„å®šæ—¶å™¨*/
+    OSTmrFreeList   = (OS_TMR *)ptmr->OSTmrNext;      /*´Ó¶¨Ê±Æ÷ÁĞ±íÖĞÈ¡³öÒ»¸ö¿ÕµÄ¶¨Ê±Æ÷*/
     ptmr->OSTmrNext = (OS_TCB *)0;
     ptmr->OSTmrPrev = (OS_TCB *)0;
     OSTmrUsed++;
@@ -791,7 +791,7 @@ static  OS_TMR  *OSTmr_Alloc (void)
 #if OS_TMR_EN > 0u
 static  void  OSTmr_Free (OS_TMR *ptmr)
 {
-    ptmr->OSTmrState       = OS_TMR_STATE_UNUSED;      /* Clear timer object fields(æ¸…é™¤timerçš„å‚æ•°)                  */
+    ptmr->OSTmrState       = OS_TMR_STATE_UNUSED;      /* Clear timer object fields(Çå³ıtimerµÄ²ÎÊı)                  */
     ptmr->OSTmrOpt         = OS_TMR_OPT_NONE;
     ptmr->OSTmrPeriod      = 0u;
     ptmr->OSTmrMatch       = 0u;
@@ -838,7 +838,7 @@ void  OSTmr_Init (void)
 
     OS_MemClr((INT8U *)&OSTmrTbl[0],      sizeof(OSTmrTbl));            /* Clear all the TMRs                         */
     OS_MemClr((INT8U *)&OSTmrWheelTbl[0], sizeof(OSTmrWheelTbl));       /* Clear the timer wheel                      */
-    /*é™¤äº†æœ€åä¸€ä¸ªï¼Œä¸ºtimeråˆ›å»ºé“¾è¡¨*/
+    /*³ıÁË×îºóÒ»¸ö£¬Îªtimer´´½¨Á´±í*/
     for (ix = 0u; ix < (OS_TMR_CFG_MAX - 1u); ix++) {                   /* Init. list of free TMRs                    */
         ix_next = ix + 1u;
         ptmr1 = &OSTmrTbl[ix];
@@ -857,12 +857,12 @@ void  OSTmr_Init (void)
 #if OS_TMR_CFG_NAME_EN > 0u
     ptmr1->OSTmrName    = (INT8U *)(void *)"?";
 #endif
-    OSTmrTime           = 0u;                                           /*å¯¹ä¸€äº›timerçš„å…¨å±€å˜é‡è¿›è¡Œèµ‹å€¼*/
+    OSTmrTime           = 0u;                                           /*¶ÔÒ»Ğ©timerµÄÈ«¾Ö±äÁ¿½øĞĞ¸³Öµ*/
     OSTmrUsed           = 0u;
     OSTmrFree           = OS_TMR_CFG_MAX;
     OSTmrFreeList       = &OSTmrTbl[0];
-    OSTmrSem            = OSSemCreate(1u);                             /*åˆ›å»ºtimerçš„ä¿¡å·é‡ï¼ŒTmrLockä½¿ç”¨ä¸çŸ¥é“å¹²å˜›*/
-    OSTmrSemSignal      = OSSemCreate(0u);                             /*å¹¶æœªä¿¡å·é‡èµ‹åˆå§‹å€¼*/
+    OSTmrSem            = OSSemCreate(1u);                             /*´´½¨timerµÄĞÅºÅÁ¿£¬TmrLockÊ¹ÓÃ²»ÖªµÀ¸ÉÂï*/
+    OSTmrSemSignal      = OSSemCreate(0u);                             /*²¢Î´ĞÅºÅÁ¿¸³³õÊ¼Öµ*/
 
 #if OS_EVENT_NAME_EN > 0u                                               /* Assign names to semaphores                 */
     OSEventNameSet(OSTmrSem,       (INT8U *)(void *)"uC/OS-II TmrLock",   &err);
@@ -893,13 +893,13 @@ static  void  OSTmr_InitTask (void)
 #endif
 
 
-#if OS_TASK_CREATE_EXT_EN > 0u    /*æ˜¯ä¸æ˜¯ä½¿ç”¨åˆ›å»ºä»»åŠ¡æ‰©å±•å‡½æ•°*/
-    #if OS_STK_GROWTH == 1u       /*æ ¹æ®å †æ ˆçš„æ–¹å‘ä¸åŒåˆ›å»ºä¸åŒçš„ä»»åŠ¡ï¼Œé€‚åº”ä¸åŒçš„CPU*/
+#if OS_TASK_CREATE_EXT_EN > 0u    /*ÊÇ²»ÊÇÊ¹ÓÃ´´½¨ÈÎÎñÀ©Õ¹º¯Êı*/
+    #if OS_STK_GROWTH == 1u       /*¸ù¾İ¶ÑÕ»µÄ·½Ïò²»Í¬´´½¨²»Í¬µÄÈÎÎñ£¬ÊÊÓ¦²»Í¬µÄCPU*/
     (void)OSTaskCreateExt(OSTmr_Task,
                           (void *)0,                                       /* No arguments passed to OSTmrTask()      */
                           &OSTmrTaskStk[OS_TASK_TMR_STK_SIZE - 1u],        /* Set Top-Of-Stack                        */
-                          OS_TASK_TMR_PRIO,                                /*ä»»åŠ¡çš„ä¼˜å…ˆçº§*/
-                          OS_TASK_TMR_ID,                                  /*ä»»åŠ¡IDåœ¨ucosII.hæœ‰å®šä¹‰*/
+                          OS_TASK_TMR_PRIO,                                /*ÈÎÎñµÄÓÅÏÈ¼¶*/
+                          OS_TASK_TMR_ID,                                  /*ÈÎÎñIDÔÚucosII.hÓĞ¶¨Òå*/
                           &OSTmrTaskStk[0],                                /* Set Bottom-Of-Stack                     */
                           OS_TASK_TMR_STK_SIZE,
                           (void *)0,                                       /* No TCB extension                        */
@@ -915,7 +915,7 @@ static  void  OSTmr_InitTask (void)
                           (void *)0,                                       /* No TCB extension                        */
                           OS_TASK_OPT_STK_CHK | OS_TASK_OPT_STK_CLR);      /* Enable stack checking + clear stack     */
     #endif
-#else                           /*ä½¿ç”¨æ™®é€šåˆ›å»ºä»»åŠ¡å‡½æ•°*/
+#else                           /*Ê¹ÓÃÆÕÍ¨´´½¨ÈÎÎñº¯Êı*/
     #if OS_STK_GROWTH == 1u
     (void)OSTaskCreate(OSTmr_Task,
                        (void *)0,
@@ -962,26 +962,26 @@ static  void  OSTmr_Link (OS_TMR  *ptmr,
     INT16U        spoke;
 
     
-    ptmr->OSTmrState = OS_TMR_STATE_RUNNING;                       /*èµ‹å€¼å¼€å§‹è¿è¡Œtimer*/
+    ptmr->OSTmrState = OS_TMR_STATE_RUNNING;                       /*¸³Öµ¿ªÊ¼ÔËĞĞtimer*/
     if (type == OS_TMR_LINK_PERIODIC) {                            /* Determine when timer will expire                */
-        ptmr->OSTmrMatch = ptmr->OSTmrPeriod + OSTmrTime;          /*re_insertè¿ç»­å®šæ—¶çš„æ—¶é—´è®¡ç®—,OSTmrMatchè¡¨ç¤ºè®¡æ—¶åˆ°çš„æ—¶é—´*/
+        ptmr->OSTmrMatch = ptmr->OSTmrPeriod + OSTmrTime;          /*re_insertÁ¬Ğø¶¨Ê±µÄÊ±¼ä¼ÆËã,OSTmrMatch±íÊ¾¼ÆÊ±µ½µÄÊ±¼ä*/
     } else {
-        if (ptmr->OSTmrDly == 0u) {                               /*ç¬¬ä¸€æ¬¡insert å®šæ—¶å™¨åˆ°timer wheel*/
-            ptmr->OSTmrMatch = ptmr->OSTmrPeriod + OSTmrTime;     /*å¦‚æœDly==0 åˆ™ä½¿ç”¨Period*/
+        if (ptmr->OSTmrDly == 0u) {                               /*µÚÒ»´Îinsert ¶¨Ê±Æ÷µ½timer wheel*/
+            ptmr->OSTmrMatch = ptmr->OSTmrPeriod + OSTmrTime;     /*Èç¹ûDly==0 ÔòÊ¹ÓÃPeriod*/
         } else {
             ptmr->OSTmrMatch = ptmr->OSTmrDly    + OSTmrTime;
         }
     }
-    spoke  = (INT16U)(ptmr->OSTmrMatch % OS_TMR_CFG_WHEEL_SIZE);   /*å¯¹å®šæ—¶è¿›è¡Œåˆ†ç»„*/
+    spoke  = (INT16U)(ptmr->OSTmrMatch % OS_TMR_CFG_WHEEL_SIZE);   /*¶Ô¶¨Ê±½øĞĞ·Ö×é*/
     pspoke = &OSTmrWheelTbl[spoke];
 
     if (pspoke->OSTmrFirst == (OS_TMR *)0) {                       /* Link into timer wheel                           */
-        pspoke->OSTmrFirst   = ptmr;                               /*è¯¥åˆ†ç»„åŸæ¥æ²¡æœ‰timer*/
+        pspoke->OSTmrFirst   = ptmr;                               /*¸Ã·Ö×éÔ­À´Ã»ÓĞtimer*/
         ptmr->OSTmrNext      = (OS_TMR *)0;
-        pspoke->OSTmrEntries = 1u;                                  /*æ ‡è®°åªæœ‰ä¸€ä¸ªtimer*/
+        pspoke->OSTmrEntries = 1u;                                  /*±ê¼ÇÖ»ÓĞÒ»¸ötimer*/
     } else {
         ptmr1                = pspoke->OSTmrFirst;                 /* Point to first timer in the spoke               */
-        pspoke->OSTmrFirst   = ptmr;                               /*å°†æ–°å¢åŠ çš„timeré“¾æ¥åˆ°è¡¨å¤´*/
+        pspoke->OSTmrFirst   = ptmr;                               /*½«ĞÂÔö¼ÓµÄtimerÁ´½Óµ½±íÍ·*/
         ptmr->OSTmrNext      = (void *)ptmr1;
         ptmr1->OSTmrPrev     = (void *)ptmr;
         pspoke->OSTmrEntries++;
@@ -1012,14 +1012,14 @@ static  void  OSTmr_Unlink (OS_TMR *ptmr)
     INT16U         spoke;
 
 
-    spoke  = (INT16U)(ptmr->OSTmrMatch % OS_TMR_CFG_WHEEL_SIZE);/*ç¡®å®štimerçš„åˆ†ç»„*/
+    spoke  = (INT16U)(ptmr->OSTmrMatch % OS_TMR_CFG_WHEEL_SIZE);/*È·¶¨timerµÄ·Ö×é*/
     pspoke = &OSTmrWheelTbl[spoke];
 
     if (pspoke->OSTmrFirst == ptmr) {                       /* See if timer to remove is at the beginning of list     */
         ptmr1              = (OS_TMR *)ptmr->OSTmrNext;
         pspoke->OSTmrFirst = (OS_TMR *)ptmr1;
         if (ptmr1 != (OS_TMR *)0) {
-            ptmr1->OSTmrPrev = (void *)0;                   /*å¦‚æœä¸ç­‰äº0ï¼Œå°†å‰æŒ‡é’ˆæŒ‡å‘0*/
+            ptmr1->OSTmrPrev = (void *)0;                   /*Èç¹û²»µÈÓÚ0£¬½«Ç°Ö¸ÕëÖ¸Ïò0*/
         }
     } else {
         ptmr1            = (OS_TMR *)ptmr->OSTmrPrev;       /* Remove timer from somewhere in the list                */
@@ -1029,7 +1029,7 @@ static  void  OSTmr_Unlink (OS_TMR *ptmr)
             ptmr2->OSTmrPrev = (void *)ptmr1;
         }
     }
-    ptmr->OSTmrState = OS_TMR_STATE_STOPPED;               /*æ ‡è®°å®šæ—¶å™¨ä¸ºstop*/
+    ptmr->OSTmrState = OS_TMR_STATE_STOPPED;               /*±ê¼Ç¶¨Ê±Æ÷Îªstop*/
     ptmr->OSTmrNext  = (void *)0;
     ptmr->OSTmrPrev  = (void *)0;
     pspoke->OSTmrEntries--;
@@ -1063,7 +1063,7 @@ static  void  OSTmr_Task (void *p_arg)
     p_arg = p_arg;                                               /* Prevent compiler warning for not using 'p_arg'    */
     for (;;) {
         OSSemPend(OSTmrSemSignal, 0u, &err);                     /* Wait for signal indicating time to update timers  */
-        OSSchedLock();                                           /*Lockè°ƒåº¦å™¨*/
+        OSSchedLock();                                           /*Lockµ÷¶ÈÆ÷*/
         OSTmrTime++;                                             /* Increment the current time                        */
         spoke  = (INT16U)(OSTmrTime % OS_TMR_CFG_WHEEL_SIZE);    /* Position on current timer wheel entry             */
         pspoke = &OSTmrWheelTbl[spoke];
@@ -1073,14 +1073,14 @@ static  void  OSTmr_Task (void *p_arg)
                                                                  /* ... timer could get unlinked from the wheel.      */
             if (OSTmrTime == ptmr->OSTmrMatch) {                 /* Process each timer that expires                   */
                 OSTmr_Unlink(ptmr);                              /* Remove from current wheel spoke                   */
-                if (ptmr->OSTmrOpt == OS_TMR_OPT_PERIODIC) {     /*æ˜¯ä¸æ˜¯è¿ç»­è®¡æ•°*/
+                if (ptmr->OSTmrOpt == OS_TMR_OPT_PERIODIC) {     /*ÊÇ²»ÊÇÁ¬Ğø¼ÆÊı*/
                     OSTmr_Link(ptmr, OS_TMR_LINK_PERIODIC);      /* Recalculate new position of timer in wheel        */
                 } else {
                     ptmr->OSTmrState = OS_TMR_STATE_COMPLETED;   /* Indicate that the timer has completed             */
                 }
                 pfnct = ptmr->OSTmrCallback;                     /* Execute callback function if available            */
                 if (pfnct != (OS_TMR_CALLBACK)0) {
-                    (*pfnct)((void *)ptmr, ptmr->OSTmrCallbackArg);/*è°ƒç”¨å›è°ƒå‡½æ•°*/
+                    (*pfnct)((void *)ptmr, ptmr->OSTmrCallbackArg);/*µ÷ÓÃ»Øµ÷º¯Êı*/
                 }
             }
             ptmr = ptmr_next;
