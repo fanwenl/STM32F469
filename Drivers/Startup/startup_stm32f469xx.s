@@ -1,8 +1,8 @@
-;/******************** (C) COPYRIGHT 2016 STMicroelectronics ********************
+;/******************** (C) COPYRIGHT 2015 STMicroelectronics ********************
 ;* File Name          : startup_stm32f469xx.s
 ;* Author             : MCD Application Team
-;* Version            : V2.5.0
-;* Date               : 22-April-2016
+;* Version            : V2.4.2
+;* Date               : 13-November-2015
 ;* Description        : STM32F469xx devices vector table for EWARM toolchain.
 ;*                      This module performs:
 ;*                      - Set the initial SP
@@ -61,11 +61,10 @@
         SECTION CSTACK:DATA:NOROOT(3)
 
         SECTION .intvec:CODE:NOROOT(2)
-		  
-		  EXTERN HardFault_Handler_C
+
         EXTERN  __iar_program_start
         EXTERN  SystemInit
-		  EXTERN  OS_CPU_PendSVHandler
+//        EXTERN  OS_CPU_PendSVHandler
         PUBLIC  __vector_table
 
         DATA
@@ -193,7 +192,7 @@ __vector_table
 Reset_Handler
 
         LDR     R0, =SystemInit
-        BLX     R0  
+        BLX     R0
         LDR     R0, =__iar_program_start
         BX      R0
 
@@ -205,13 +204,7 @@ NMI_Handler
         PUBWEAK HardFault_Handler
         SECTION .text:CODE:REORDER:NOROOT(1)
 HardFault_Handler
-//        B HardFault_Handler
-			TST LR, #4
-			ITE EQ
-			MRSEQ R0, MSP
-			MRSNE R0, PSP
-			MOV R1, LR
-			B HardFault_Handler_C
+        B HardFault_Handler
 
         PUBWEAK MemManage_Handler
         SECTION .text:CODE:REORDER:NOROOT(1)
@@ -238,10 +231,10 @@ SVC_Handler
 DebugMon_Handler
         B DebugMon_Handler
 
-        PUBWEAK PendSV_Handler
+        PUBWEAK OS_CPU_PendSVHandler
         SECTION .text:CODE:REORDER:NOROOT(1)
-PendSV_Handler
-        B PendSV_Handler
+OS_CPU_PendSVHandler
+        B OS_CPU_PendSVHandler
 
         PUBWEAK SysTick_Handler
         SECTION .text:CODE:REORDER:NOROOT(1)
