@@ -45,7 +45,7 @@
 */
 
 #include  <ucos_ii.h>
-#include "app_hooks.h"
+
 
 
 /*
@@ -107,10 +107,10 @@ void  OSInitHookBegin (void)                                    /*在系统初始化函
        *pstk++ = (OS_STK)0;
     }
     /*理解对齐，向下增长的指针，先获得堆栈起始的地址，也就是初始化的栈顶指针，然后&0xFFFFFFF8，地址变小对齐             */
-                                                                /* Align the ISR stack to 8-bytes                       */
+                                                                /* Align the ISR stack to 8-bytes(8字节)            */
     OS_CPU_ExceptStkBase = (OS_STK *)&OS_CPU_ExceptStk[OS_CPU_EXCEPT_STK_SIZE];
     OS_CPU_ExceptStkBase = (OS_STK *)((OS_STK)(OS_CPU_ExceptStkBase) & 0xFFFFFFF8);
-    /*为啥要8字节对齐？*/
+    /*为啥要8字节对齐，ARM架构有关*/
 #if OS_TMR_EN > 0u
     OSTmrCtr = 0u;   /*软件定时器变量初始化*/
 #endif

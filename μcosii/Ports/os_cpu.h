@@ -45,7 +45,7 @@
 #define  OS_CPU_EXT  extern
 #endif
 
-#ifndef  OS_CPU_EXCEPT_STK_SIZE
+#ifndef  OS_CPU_EXCEPT_STK_SIZE					/*定义了异常堆栈的大小*/
 #define  OS_CPU_EXCEPT_STK_SIZE    128u          /* Default exception stack size is 128 OS_STK entries */
 #endif
 
@@ -61,6 +61,7 @@
 #else
 #define  OS_CPU_ARM_FP_EN                                 0u
 #endif
+
 
 /*
 *********************************************************************************************************
@@ -155,7 +156,7 @@ typedef unsigned int   OS_CPU_SR;                /* Define size of CPU status re
 *********************************************************************************************************
 */
 
-OS_CPU_EXT  OS_STK   OS_CPU_ExceptStk[OS_CPU_EXCEPT_STK_SIZE];
+OS_CPU_EXT  OS_STK   OS_CPU_ExceptStk[OS_CPU_EXCEPT_STK_SIZE];		/*定义了异常堆栈*/
 OS_CPU_EXT  OS_STK  *OS_CPU_ExceptStkBase;
 
 
