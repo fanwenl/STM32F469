@@ -1,0 +1,6 @@
+{
+  "name": "Stm32f469",
+  "tagline": "STM32F469",
+  "body": "# STM32F469\r\n\r\n基于STM32F469-Discovery硬件平台和IAR7.40开发，详细功能以及版本请看/Doc/readme.txt.谢谢！！\r\n",
+  "note": "Don't delete this file! It's used internally to help with page regeneration."
+}
